@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,7 +24,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     TextView signUpInstead;
     Button signInBtn;
-
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         Toast.LENGTH_SHORT).show();
                                 Log.d("MARIA", "signInWithEmail:success");
 
+                                goToMainActivity(mAuth.getCurrentUser());
+
+
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w("MARIA", "signInWithEmail:failure", task.getException());
@@ -75,5 +78,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(mIntent);
             finish();
         }
+
+    }
+
+    public void goToMainActivity(FirebaseUser user){
+        Intent mIntent = new Intent(this, MainActivity.class);
+        mIntent.putExtra("USERNAME", user.getEmail()+"");
+        startActivity(mIntent);
+        finish();
     }
 }
