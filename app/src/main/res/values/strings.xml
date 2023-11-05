@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">AllOurTrees</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="singup_text">Don\'t have a user? Create one <u>here</u></string>
+    <string name="singin_text">Already have a user? Sign in <u>here</u></string>
 </resources>
