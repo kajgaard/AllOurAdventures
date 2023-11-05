@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "510695847125",
+    "project_id": "allourtrees-4bf1a",
+    "storage_bucket": "allourtrees-4bf1a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510695847125:android:7146b0fef80f6fb9f3de5c",
+        "android_client_info": {
+          "package_name": "com.example.allourtrees"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvjgVZEkLu7CUpKb8C5LjTkq9QdSa0VTU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
