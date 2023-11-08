@@ -82,6 +82,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void goToMainActivity(FirebaseUser user){
+
         Intent mIntent = new Intent(this, MainActivity.class);
         mIntent.putExtra("USERNAME", user.getEmail()+"");
         startActivity(mIntent);
