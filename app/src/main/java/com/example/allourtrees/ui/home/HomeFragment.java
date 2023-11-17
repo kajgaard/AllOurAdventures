@@ -37,6 +37,9 @@ public class HomeFragment extends Fragment {
     String userName;
     String userID;
 
+    MainActivity activity;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +55,12 @@ public class HomeFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
+
+        activity = (MainActivity) getActivity();
+        String name = activity.userDataController.getUserName();
+        textView.setText("Hello there " + name);
+
+
         updateData();
 
         return root;
