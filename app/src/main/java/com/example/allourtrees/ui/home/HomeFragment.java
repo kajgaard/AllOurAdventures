@@ -57,8 +57,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        //binding = FragmentHomeBinding.inflate(inflater, container, false);
-        //View root = binding.getRoot();
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
 
         db = FirebaseFirestore.getInstance();
@@ -68,13 +68,15 @@ public class HomeFragment extends Fragment {
 
 
         //////////////////////////////////////////////////////////
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        //View rootView = inflater.inflate(R.layout.fragment_home, container, false); //From tutorial, but using binding is easier :))
 
-        textView = rootView.findViewById(R.id.name_of_user_TV);
+        //textView = rootView.findViewById(R.id.name_of_user_TV); //From tutorial, but using binding is easier :))
+        textView = binding.nameOfUserTV;
 
         badgeList = genreateBadgeItems();
 
-        badgeRecyclerView = rootView.findViewById(R.id.badges_recyclerview);
+        //badgeRecyclerView = rootView.findViewById(R.id.badges_recyclerview); //From tutorial, but using binding is easier :))
+        badgeRecyclerView = binding.badgesRecyclerview;
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         badgeRecyclerView.setLayoutManager(layoutManager);
@@ -84,12 +86,13 @@ public class HomeFragment extends Fragment {
 
         updateData();
 
-        return rootView;
+        //return rootView;
 
-        //return root;
+        return root;
     }
 
     private List<BadgeItem> genreateBadgeItems(){
+        //Should be fetched from db
         List<BadgeItem> badgeItems = new ArrayList<>();
         badgeItems.add(new BadgeItem(R.drawable.novice_explorer_badge,"Novice Explorer Badge","Make 50 total discoveries to achieve this bagde",43,50));
         badgeItems.add(new BadgeItem(R.drawable.church_badge,"The Pilgrim Badge","Visit all the 10 danish cathedrals",2,10));
