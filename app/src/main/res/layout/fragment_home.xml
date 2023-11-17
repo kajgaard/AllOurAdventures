@@ -15,71 +15,78 @@
         app:layout_constraintTop_toTopOf="parent"
         >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imageView"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/bg_clear" />
-        </LinearLayout>
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/bg_clear"
+                    android:importantForAccessibility="no" />
+
+                <TextView
+                    android:id="@+id/name_of_user_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-5dp"
+                    android:text="Name"
+                    android:textAlignment="center"
+                    android:textSize="42sp"
+                    app:layout_constraintStart_toStartOf="@+id/GreetingTV"
+                    app:layout_constraintTop_toBottomOf="@+id/GreetingTV" />
+
+                <TextView
+                    android:id="@+id/GreetingTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="GOOD MORNING"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/current_dateTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="17TH NOVEMBER 2023"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView6"
+                    app:layout_constraintStart_toStartOf="@+id/name_of_user_TV" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Statistics"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toTopOf="@+id/badges_recyclerview"
+                    app:layout_constraintStart_toStartOf="@+id/name_of_user_TV" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/badges_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="300dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name_of_user_TV"
+                    android:orientation="horizontal"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 
-    <TextView
-        android:id="@+id/name_of_user_TV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-5dp"
-        android:text="Name"
-        android:textAlignment="center"
-        android:textSize="42sp"
-        app:layout_constraintStart_toStartOf="@+id/GreetingTV"
-        app:layout_constraintTop_toBottomOf="@+id/GreetingTV" />
-
-    <TextView
-        android:id="@+id/GreetingTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:text="GOOD MORNING"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/current_dateTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="17TH NOVEMBER 2023"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
-        app:layout_constraintStart_toStartOf="@+id/name_of_user_TV" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:text="Statistics"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/badges_recyclerview"
-        app:layout_constraintStart_toStartOf="@+id/name_of_user_TV" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/badges_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="300dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_of_user_TV"
-        android:orientation="horizontal"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
