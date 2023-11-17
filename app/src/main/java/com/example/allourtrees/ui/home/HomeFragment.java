@@ -56,11 +56,6 @@ public class HomeFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
 
-        activity = (MainActivity) getActivity();
-        String name = activity.userDataController.getUserName();
-        textView.setText("Hello there " + name);
-
-
         updateData();
 
         return root;
