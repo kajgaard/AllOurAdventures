@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        textView  = binding.textHome;
+        textView  = binding.nameOfUserTV;
 
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
 
                         Map<String, Object> data = document.getData();
                         userName = data.get("name").toString();
-                        textView.setText("Hello there " + userName);
+                        textView.setText(""+userName);
 
                     } else {
 
