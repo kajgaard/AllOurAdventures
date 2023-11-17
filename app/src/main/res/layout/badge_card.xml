@@ -4,21 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="180dp"
     android:layout_height="90dp"
-    android:background="@drawable/badge_card_background">
+    android:background="@drawable/badge_card_background"
+    android:layout_marginEnd="10dp">
 
 
     <ProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/badge_progressBar"
         style="?android:attr/progressBarStyle"
-        android:layout_width="72dp"
-        android:layout_height="0dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:indeterminateOnly="false"
+        android:progress="70"
+        android:rotation="270"
+        android:progressDrawable="@drawable/custom_progress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:progress="80"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/badge_title_tv"
@@ -27,8 +29,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:text="Badge title"
-        app:layout_constraintEnd_toStartOf="@+id/progressBar"
+        android:text="Novice Explorer Badge"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/badge_progressBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,28 +43,28 @@
         android:layout_marginEnd="5dp"
         android:text="The is the badge description that might just be a few lines long"
         android:textSize="8sp"
-        app:layout_constraintEnd_toStartOf="@+id/progressBar"
+        app:layout_constraintEnd_toStartOf="@+id/badge_progressBar"
         app:layout_constraintStart_toStartOf="@+id/badge_title_tv"
         app:layout_constraintTop_toBottomOf="@+id/badge_title_tv" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/badge_current_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-8dp"
+        android:layout_marginTop="-5dp"
         android:text="43/50"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="@+id/progressBar"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+        app:layout_constraintEnd_toEndOf="@+id/badge_progressBar"
+        app:layout_constraintStart_toStartOf="@+id/badge_progressBar"
+        app:layout_constraintTop_toBottomOf="@+id/badge_progressBar" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/badge_icon_IV"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
-        app:layout_constraintEnd_toEndOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="@+id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/progressBar"
+        app:layout_constraintBottom_toBottomOf="@+id/badge_progressBar"
+        app:layout_constraintEnd_toEndOf="@+id/badge_progressBar"
+        app:layout_constraintStart_toStartOf="@+id/badge_progressBar"
+        app:layout_constraintTop_toTopOf="@+id/badge_progressBar"
         app:srcCompat="@drawable/novice_explorer_badge" />
 </androidx.constraintlayout.widget.ConstraintLayout>
