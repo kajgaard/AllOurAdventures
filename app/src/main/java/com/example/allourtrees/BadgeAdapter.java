@@ -53,8 +53,8 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
         public BadgeViewHolder(@NonNull View itemView) {
             super(itemView);
             badgeIcon = itemView.findViewById(R.id.badge_icon_IV);
-            badgeTitle = itemView.findViewById(R.id.badge_title_tv);
-            badgeDescription = itemView.findViewById(R.id.badge_descript_tv);
+            badgeTitle = itemView.findViewById(R.id.activity_title_tv);
+            badgeDescription = itemView.findViewById(R.id.activity_main_title_tv);
             currentProgress = itemView.findViewById(R.id.badge_current_progress);
             progressBar = itemView.findViewById(R.id.badge_progressBar);
         }

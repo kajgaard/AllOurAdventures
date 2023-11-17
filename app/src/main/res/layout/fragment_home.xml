@@ -17,74 +17,224 @@
         >
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <ImageView
+                android:id="@+id/bg_clear"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:importantForAccessibility="no"
+                android:src="@drawable/bg_clear"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:src="@drawable/bg_clear"
-                    android:importantForAccessibility="no" />
+            <TextView
+                android:id="@+id/name_of_user_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-5dp"
+                android:text="Name"
+                android:textAlignment="center"
+                android:textSize="42sp"
+                app:layout_constraintStart_toStartOf="@+id/GreetingTV"
+                app:layout_constraintTop_toBottomOf="@+id/GreetingTV" />
 
-                <TextView
-                    android:id="@+id/name_of_user_TV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="-5dp"
-                    android:text="Name"
-                    android:textAlignment="center"
-                    android:textSize="42sp"
-                    app:layout_constraintStart_toStartOf="@+id/GreetingTV"
-                    app:layout_constraintTop_toBottomOf="@+id/GreetingTV" />
+            <TextView
+                android:id="@+id/GreetingTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="GOOD MORNING"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/GreetingTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:text="GOOD MORNING"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/current_dateTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="17TH NOVEMBER 2023"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/statistics_header"
+                app:layout_constraintStart_toStartOf="@+id/name_of_user_TV" />
 
-                <TextView
-                    android:id="@+id/current_dateTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="17TH NOVEMBER 2023"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView6"
-                    app:layout_constraintStart_toStartOf="@+id/name_of_user_TV" />
+            <TextView
+                android:id="@+id/statistics_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Statistics"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/badges_recyclerview"
+                app:layout_constraintStart_toStartOf="@+id/name_of_user_TV" />
 
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:text="Statistics"
-                    android:textColor="@color/white"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toTopOf="@+id/badges_recyclerview"
-                    app:layout_constraintStart_toStartOf="@+id/name_of_user_TV" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/badges_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="300dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name_of_user_TV" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/badges_recyclerview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="300dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/name_of_user_TV"
-                    android:orientation="horizontal"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/total_disc_bg"
+                android:layout_width="0dp"
+                android:layout_height="231dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/blue_card_background"
+                app:layout_constraintEnd_toStartOf="@+id/divider"
+                app:layout_constraintStart_toStartOf="@+id/bg_clear"
+                app:layout_constraintTop_toBottomOf="@+id/badges_recyclerview" />
+
+            <ImageView
+                android:id="@+id/recent_disc_bg"
+                android:layout_width="0dp"
+                android:layout_height="230dp"
+                android:layout_marginEnd="15dp"
+                android:src="@drawable/green_card_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/divider"
+                app:layout_constraintTop_toTopOf="@+id/total_disc_bg" />
+
+            <TextView
+                android:id="@+id/total_disc_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Total \nDiscoveries"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/total_disc_bg"
+                app:layout_constraintTop_toTopOf="@+id/total_disc_bg" />
+
+            <TextView
+                android:id="@+id/total_disc_count_TV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="47"
+                android:textSize="72sp"
+                app:layout_constraintBottom_toBottomOf="@+id/total_disc_bg"
+                app:layout_constraintStart_toStartOf="@+id/total_disc_header"
+                app:layout_constraintTop_toBottomOf="@+id/total_disc_header" />
+
+
+            <TextView
+                android:id="@+id/recent_disc_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Recent \nAdventures"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/recent_disc_bg"
+                app:layout_constraintTop_toTopOf="@+id/recent_disc_bg" />
+
+            <TextView
+                android:id="@+id/this_week_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="THIS WEEK"
+                app:layout_constraintBottom_toBottomOf="@+id/this_week_count"
+                app:layout_constraintStart_toEndOf="@+id/this_week_count"
+                app:layout_constraintTop_toTopOf="@+id/this_week_count" />
+
+            <TextView
+                android:id="@+id/this_month_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="THIS MONTH"
+                app:layout_constraintBottom_toBottomOf="@+id/this_month_count"
+                app:layout_constraintStart_toEndOf="@+id/this_month_count"
+                app:layout_constraintTop_toTopOf="@+id/this_month_count"
+                app:layout_constraintVertical_bias="0.458" />
+
+            <TextView
+                android:id="@+id/this_year_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="THIS YEAR"
+                app:layout_constraintBottom_toBottomOf="@+id/this_year_count"
+                app:layout_constraintStart_toEndOf="@+id/this_year_count"
+                app:layout_constraintTop_toTopOf="@+id/this_year_count" />
+
+            <TextView
+                android:id="@+id/this_week_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="2"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="@+id/this_year_count"
+                app:layout_constraintTop_toBottomOf="@+id/recent_disc_header" />
+
+            <TextView
+                android:id="@+id/this_month_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="6"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="@+id/this_week_count"
+                app:layout_constraintTop_toBottomOf="@+id/this_week_count" />
+
+            <TextView
+                android:id="@+id/this_year_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="38"
+                android:textSize="32sp"
+                app:layout_constraintStart_toStartOf="@+id/recent_disc_header"
+                app:layout_constraintTop_toBottomOf="@+id/this_month_count" />
+
+            <ImageView
+                android:id="@+id/divider"
+                android:layout_width="15dp"
+                android:layout_height="180dp"
+                android:src="@drawable/transparent_block"
+                app:layout_constraintEnd_toEndOf="@+id/bg_clear"
+                app:layout_constraintStart_toStartOf="@+id/bg_clear"
+                app:layout_constraintTop_toTopOf="@+id/total_disc_bg" />
+
+            <TextView
+                android:id="@+id/community_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Community"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:layout_marginTop="25dp"
+                app:layout_constraintTop_toBottomOf="@id/total_disc_bg"
+                app:layout_constraintStart_toStartOf="@id/total_disc_bg"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/community_recyclerview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/community_header"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/community_header"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
