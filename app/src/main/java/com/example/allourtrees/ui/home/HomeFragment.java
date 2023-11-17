@@ -121,11 +121,11 @@ public class HomeFragment extends Fragment {
         //Should be fetched from db
         List<CommunityActivityItem> dummyCommunityItems = new ArrayList<>();
         dummyCommunityItems.add(new CommunityActivityItem(true,R.drawable.woman_profile_pic,R.drawable.church_badge,"Pilgrim Badge", "Susan J."));
-        dummyCommunityItems.add(new CommunityActivityItem(false,R.drawable.hvide_maend,"De Hvide Mænd","Jeppe K."));
-        dummyCommunityItems.add(new CommunityActivityItem(false,R.drawable.frederiksborg,"Frederiksborg Slot","Charlotte H."));
+        dummyCommunityItems.add(new CommunityActivityItem(false,R.drawable.hvide_maend_small,"De Hvide Mænd","Jeppe K."));
         dummyCommunityItems.add(new CommunityActivityItem(true,R.drawable.man_profile_pic1,R.drawable.intermediate_badge,"Intermediate Explorer", "Jeppe K."));
-        dummyCommunityItems.add(new CommunityActivityItem(false,R.drawable.kanal_rundfart,"Nyhavn","Tina L."));
+        dummyCommunityItems.add(new CommunityActivityItem(false,R.drawable.kanal_rundfart_small,"Nyhavn","Tina L."));
         dummyCommunityItems.add(new CommunityActivityItem(true,R.drawable.man_profile_pic2,R.drawable.troll_badge,"The Trolls of Denmark", "Timmy P."));
+        dummyCommunityItems.add(new CommunityActivityItem(false,R.drawable.frederiksborg_small,"Frederiksborg Slot","Charlotte H."));
 
         return dummyCommunityItems;
     }
