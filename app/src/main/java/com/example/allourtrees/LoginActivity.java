@@ -41,6 +41,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mAuth = FirebaseAuth.getInstance();
 
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            // User is signed in
+            Toast.makeText(LoginActivity.this, "Yay! You were already logged in!",
+                    Toast.LENGTH_SHORT).show();
+            Log.d("MARIA", "user is already logged in");
+
+            goToMainActivity(mAuth.getCurrentUser());
+        }
+
+
     }
 
     @Override
