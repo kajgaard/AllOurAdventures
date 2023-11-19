@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,14 +14,17 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -36,7 +40,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavController.OnDestinationChangedListener {
 
     private ActivityMainBinding binding;
 
@@ -48,6 +52,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int FINE_PERMISSION_CODE = 1;
     public static Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
+    boolean fabFlag = false;
+
+    BottomNavigationView navView;
+
+
+    NavController navController;
 
 
     @Override
@@ -57,18 +67,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications, R.id.navigation_profile)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+
         newEntryBtn = binding.fab;
         newEntryBtn.setOnClickListener(this);
+
+        navController.addOnDestinationChangedListener(this);
 
         getAttractionsFromCsv();
 
@@ -145,14 +159,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if(view == newEntryBtn){
-            Fragment newEntryFragment = new NewEntryFragment();
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.nav_host_fragment_activity_main, newEntryFragment)
 
-                    .commit();
-            transaction.addToBackStack(null);
-            Toast.makeText(this, "Button pressed", Toast.LENGTH_SHORT).show();
+        if(fabFlag){
+            if(view == newEntryBtn){
+                navController.popBackStack();
+                navController.navigate(R.id.navigation_home);
+
+            }
+        }else{ //New entry should be opened
+            if(view == newEntryBtn){
+                navController.popBackStack();
+                navController.navigate(R.id.navigation_new_entry);
+                Toast.makeText(this, "Button pressed", Toast.LENGTH_SHORT).show();
+
+                uncheckAllItems(this.navView);
+            }
+        }
+
+    }
+
+    public static void uncheckAllItems(BottomNavigationView bottomNavigationView) {
+        Menu menu = bottomNavigationView.getMenu();
+        menu.setGroupCheckable(0, true, false);
+        for (int i = 0; i < menu.size(); i++) {
+            menu.getItem(i).setChecked(false);
+        }
+        menu.setGroupCheckable(0, true, true);
+    }
+
+    @Override
+    public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
+        if(navDestination.getId() == R.id.navigation_new_entry){
+            newEntryBtn.setImageResource(R.drawable.done_icon);
+            fabFlag = true;
+            Log.w("NAVIGATION", "Destination is FAB and flag is: " + fabFlag);
+
+        }else{
+            newEntryBtn.setImageResource(R.drawable.add_icon);
+            fabFlag = false;
+            Log.w("NAVIGATION", "Destination is NOT FAB and flag is: " + fabFlag);
 
         }
     }

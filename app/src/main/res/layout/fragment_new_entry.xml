@@ -5,17 +5,168 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.new_entry.NewEntryFragment"
-    android:background="@drawable/green_bg">
+    android:background="#FBFBFB">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/newEntryTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="THIS IS NEW ENTRY FRAGMENT"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:text="New Entry"
+        android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <AutoCompleteTextView
+        android:id="@+id/attractionET"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/autocomplete_dropdown_background"
+        android:backgroundTint="@color/white"
+        android:elevation="10dp"
+        android:hint="Attraction"
+        android:textSize="22sp"
+        android:paddingStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pin_icon" />
+
+    <EditText
+        android:id="@+id/dateET"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/autocomplete_dropdown_background"
+        android:backgroundTint="@color/white"
+        android:elevation="10dp"
+        android:inputType="date"
+        android:hint="25-10-2023"
+        android:paddingStart="20dp"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calender_icon" />
+
+    <ImageView
+        android:id="@+id/pin_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/map_pin_icon"
+        app:layout_constraintStart_toStartOf="@+id/newEntryTitle"
+        app:layout_constraintTop_toBottomOf="@+id/newEntryTitle" />
+
+    <ImageView
+        android:id="@+id/attraction_required_iv"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/required_icon"
+        app:layout_constraintBottom_toTopOf="@+id/attractionET"
+        app:layout_constraintEnd_toEndOf="@+id/attractionET" />
+
+    <ImageView
+        android:id="@+id/calender_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/calendar_icon"
+        app:layout_constraintStart_toStartOf="@+id/pin_icon"
+        app:layout_constraintTop_toBottomOf="@+id/attractionET" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="15dp"
+        android:elevation="11dp"
+        android:src="@drawable/edit_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/dateET"
+        app:layout_constraintEnd_toEndOf="@+id/dateET"
+        app:layout_constraintTop_toTopOf="@+id/dateET" />
+
+    <ImageView
+        android:id="@+id/cameraIconIV"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/camera_icon"
+        app:layout_constraintStart_toStartOf="@+id/calender_icon"
+        app:layout_constraintTop_toBottomOf="@+id/dateET" />
+
+    <android.widget.Button
+        android:id="@+id/addPictureBtn"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:text="Add Picture"
+        android:background="@drawable/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@+id/cameraIconIV" />
+
+    <ImageView
+        android:id="@+id/writeIconIV"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/hand_with_pen_icon"
+        app:layout_constraintStart_toStartOf="@+id/cameraIconIV"
+        app:layout_constraintTop_toBottomOf="@+id/addPictureBtn" />
+
+    <EditText
+        android:id="@+id/notesET"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:ems="10"
+        android:background="@drawable/autocomplete_dropdown_background"
+        android:backgroundTint="@color/white"
+        android:hint="Notes"
+        android:paddingStart="20dp"
+        android:textSize="22sp"
+        android:elevation="10dp"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/writeIconIV"
+        android:paddingTop="15dp"/>
+
+    <ImageView
+        android:id="@+id/addIconIV"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="15dp"
+        android:src="@drawable/add_icon"
+        android:elevation="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/notesET"
+        app:layout_constraintEnd_toEndOf="@+id/notesET"
+        app:layout_constraintTop_toTopOf="@+id/notesET" />
+
+    <ImageView
+        android:id="@+id/closeIV"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/close_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--android:backgroundTint="#C9BC97"-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

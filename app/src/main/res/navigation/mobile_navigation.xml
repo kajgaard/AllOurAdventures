@@ -28,4 +28,10 @@
         android:name="com.example.allourtrees.ui.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile"/>
+
+    <fragment
+        android:id="@+id/navigation_new_entry"
+        android:name="com.example.allourtrees.ui.new_entry.NewEntryFragment"
+        android:label="New Entry"
+        tools:layout="@layout/fragment_new_entry"/>
 </navigation>
