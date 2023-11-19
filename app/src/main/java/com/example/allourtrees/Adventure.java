@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Adventure {
     public int imageTaken;
-    public String attractionName, notes, adventureId, visitDate;
+    public String attractionName, notes, adventureId, visitDate, attractionId;
 
     public Adventure(){} //Empty constructor for firestore
 

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/attraction_card_background">
+
+
+    <TextView
+        android:id="@+id/attractionShortDescriptionTV"
+        android:layout_width="278dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-5dp"
+        android:text="I am a super short description of the attraction that is being pulled from wikipeadia "
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/attraction_title_tv"
+        app:layout_constraintTop_toBottomOf="@+id/attraction_title_tv" />
+
+    <TextView
+        android:id="@+id/attraction_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Designmuseum Denmark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/priceGroupIV"
+        android:layout_width="45dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/attraction_title_tv"
+        app:layout_constraintStart_toEndOf="@+id/attraction_title_tv"
+        app:layout_constraintTop_toTopOf="@+id/attraction_title_tv"
+        app:srcCompat="@drawable/price_4" />
+
+    <ImageView
+        android:id="@+id/distanceIconIV"
+        android:layout_width="35dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/distance_icon" />
+
+    <TextView
+        android:id="@+id/distanceTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="12 km"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/distanceIconIV"
+        app:layout_constraintStart_toStartOf="@+id/distanceIconIV"
+        app:layout_constraintTop_toBottomOf="@+id/distanceIconIV" />
+
+    <ImageView
+        android:id="@+id/beenThereStampIV"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="-5dp"
+        android:alpha="0.7"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/distanceIconIV"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/been_there_stamp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

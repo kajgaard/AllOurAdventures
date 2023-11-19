@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/activity_title_tv"
+        android:id="@+id/attractionShortDescriptionTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -22,15 +22,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/activity_main_title_tv"
+        android:id="@+id/attraction_title_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:text="Intermediate Explorer"
         android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/activity_title_tv"
-        app:layout_constraintStart_toStartOf="@+id/activity_title_tv"
-        app:layout_constraintTop_toBottomOf="@+id/activity_title_tv" />
+        app:layout_constraintEnd_toEndOf="@+id/attractionShortDescriptionTV"
+        app:layout_constraintStart_toStartOf="@+id/attractionShortDescriptionTV"
+        app:layout_constraintTop_toBottomOf="@+id/attractionShortDescriptionTV" />
 
     <TextView
         android:id="@+id/see_more_tv"
@@ -40,7 +40,7 @@
         android:text="See more"
         android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/activity_main_title_tv" />
+        app:layout_constraintStart_toStartOf="@+id/attraction_title_tv" />
 
     <ImageView
         android:id="@+id/badge_iv"
@@ -62,7 +62,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/activity_title_tv"
+        app:layout_constraintTop_toTopOf="@+id/attractionShortDescriptionTV"
         app:layout_constraintBottom_toBottomOf="parent"
         android:visibility="invisible">
 
