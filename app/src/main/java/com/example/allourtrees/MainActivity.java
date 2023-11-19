@@ -1,13 +1,14 @@
 package com.example.allourtrees;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
+import com.example.allourtrees.ui.new_entry.NewEntryFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -17,26 +18,25 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.allourtrees.databinding.ActivityMainBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityMainBinding binding;
 
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     public UserDataController userDataController = new UserDataController();
 
-
+    FloatingActionButton newEntryBtn;
     private final int FINE_PERMISSION_CODE = 1;
     public static Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -66,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        newEntryBtn = binding.fab;
+        newEntryBtn.setOnClickListener(this);
+
         getAttractionsFromCsv();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -137,6 +141,20 @@ public class MainActivity extends AppCompatActivity {
 
     public static Location getCurrentLocation() {
         return currentLocation;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == newEntryBtn){
+            Fragment newEntryFragment = new NewEntryFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.nav_host_fragment_activity_main, newEntryFragment)
+
+                    .commit();
+            transaction.addToBackStack(null);
+            Toast.makeText(this, "Button pressed", Toast.LENGTH_SHORT).show();
+
+        }
     }
 }
 

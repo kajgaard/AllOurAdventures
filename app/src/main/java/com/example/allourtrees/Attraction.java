@@ -97,11 +97,15 @@ public class Attraction {
 
     public double getDistanceToAttraction(){
         Location currentLocation = getCurrentLocation();
-        double distanceInMeters = calculateDistance(currentLocation.getLatitude(), getLattitude(), currentLocation.getLongitude(), getLongitude(),0,0);
-        double distanceInKm = distanceInMeters/1000;
-        distanceInKm = round(distanceInKm,1);
-        Log.w("MARIA", "Using values:\nCurrent pos Lat: " + currentLocation.getLatitude() + "\nCurrent pos Lon: " + currentLocation.getLongitude() + "\nAttraction lat: " + getLattitude() + "\n Attraction Lon: " + getLongitude() + "\n DISTANCE IS: "+distanceInKm);
-        return(distanceInKm);
+        if(currentLocation != null) {
+            double distanceInMeters = calculateDistance(currentLocation.getLatitude(), getLattitude(), currentLocation.getLongitude(), getLongitude(), 0, 0);
+            double distanceInKm = distanceInMeters / 1000;
+            distanceInKm = round(distanceInKm, 1);
+            Log.w("MARIA", "Using values:\nCurrent pos Lat: " + currentLocation.getLatitude() + "\nCurrent pos Lon: " + currentLocation.getLongitude() + "\nAttraction lat: " + getLattitude() + "\n Attraction Lon: " + getLongitude() + "\n DISTANCE IS: " + distanceInKm);
+            return (distanceInKm);
+        }else{
+            return(0.0);
+        }
     }
 
     private static double round (double value, int precision) {
