@@ -33,7 +33,7 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
         binding = FragmentNewEntryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        bottomBar.setOnClickListener(this);
+        //bottomBar.setOnClickListener(this);
 
         return root;
     }
