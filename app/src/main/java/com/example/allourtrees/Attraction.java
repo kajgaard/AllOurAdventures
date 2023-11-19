@@ -1,9 +1,14 @@
 package com.example.allourtrees;
 
+
 import android.content.Context;
+import android.location.Location;
+import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+
+import java.text.DecimalFormat;
 
 public class Attraction {
     private static final double EARTH_RADIUS = 6371;
@@ -32,7 +37,7 @@ public class Attraction {
         this.attractionDefaultPicture = attractionDefaultPicture;
     }
 
-    public Attraction(double longitude, double lattitude, String attractionName, String attractionDescriptionShort, String attractionDescriptionLong, int attractionDefaultPicture, String attractionCategory, int price) {
+    public Attraction(double lattitude, double longitude, String attractionName, String attractionDescriptionShort, String attractionDescriptionLong, int attractionDefaultPicture, String attractionCategory, int price) {
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.attractionName = attractionName;
@@ -91,25 +96,53 @@ public class Attraction {
     }
 
     public double getDistanceToAttraction(){
-
-        return(0.0);
+        Location currentLocation = getCurrentLocation();
+        double distanceInMeters = calculateDistance(currentLocation.getLatitude(), getLattitude(), currentLocation.getLongitude(), getLongitude(),0,0);
+        double distanceInKm = distanceInMeters/1000;
+        distanceInKm = round(distanceInKm,1);
+        Log.w("MARIA", "Using values:\nCurrent pos Lat: " + currentLocation.getLatitude() + "\nCurrent pos Lon: " + currentLocation.getLongitude() + "\nAttraction lat: " + getLattitude() + "\n Attraction Lon: " + getLongitude() + "\n DISTANCE IS: "+distanceInKm);
+        return(distanceInKm);
     }
 
-    double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-        double lat1Rad = Math.toRadians(lat1);
-        double lat2Rad = Math.toRadians(lat2);
-        double lon1Rad = Math.toRadians(lon1);
-        double lon2Rad = Math.toRadians(lon2);
-
-        double x = (lon2Rad - lon1Rad) * Math.cos((lat1Rad + lat2Rad) / 2);
-        double y = (lat2Rad - lat1Rad);
-        double distance = Math.sqrt(x * x + y * y) * EARTH_RADIUS;
-
-        return distance;
+    private static double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
     }
 
+    /**
+     * Calculate distance between two points in latitude and longitude taking
+     * into account height difference. If you are not interested in height
+     * difference pass 0.0. Uses Haversine method as its base.
+     *
+     * lat1, lon1 Start point lat2, lon2 End point el1 Start altitude in meters
+     * el2 End altitude in meters
+     * @returns Distance in Meters
+     */
+    public static double calculateDistance(double lat1, double lat2, double lon1,
+                                  double lon2, double el1, double el2) {
+
+        final int R = 6371; // Radius of the earth
+
+        double latDistance = Math.toRadians(lat2 - lat1);
+        double lonDistance = Math.toRadians(lon2 - lon1);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        double height = el1 - el2;
+
+        distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+        return Math.sqrt(distance);
+    }
     public boolean hasBeenVisitedBefore(){
         return true;
+    }
+
+    public Location getCurrentLocation(){
+        return(MainActivity.getCurrentLocation());
     }
 
 }
