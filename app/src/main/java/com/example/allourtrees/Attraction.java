@@ -14,7 +14,7 @@ public class Attraction {
     int price; //ranged from 0-4??
 
 
-    public Attraction(double longitude, double lattitude, String attractionName, String attractionDescriptionShort, String attractionDescriptionLong, String attractionCategory, int attractionDefaultPicture) {
+    public Attraction(double longitude, double lattitude, String attractionName, String attractionDescriptionShort, String attractionDescriptionLong, int attractionDefaultPicture, String attractionCategory) {
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.attractionName = attractionName;
@@ -66,5 +66,19 @@ public class Attraction {
 
     public int getPrice() {
         return price;
+    }
+
+    @Override
+    public String toString() {
+        return "Attraction{" +
+                "longitude=" + longitude +
+                ", lattitude=" + lattitude +
+                ", attractionName='" + attractionName + '\'' +
+                ", attractionDescriptionShort='" + attractionDescriptionShort + '\'' +
+                ", attractionDescriptionLong='" + attractionDescriptionLong + '\'' +
+                ", attractionDefaultPicture=" + attractionDefaultPicture +
+                ", attractionCategory='" + attractionCategory + '\'' +
+                ", price=" + price +
+                '}';
     }
 }
