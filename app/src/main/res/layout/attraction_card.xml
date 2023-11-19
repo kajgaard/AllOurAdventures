@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/activity_title_tv"
+        android:id="@+id/attractionShortDescriptionTV"
         android:layout_width="278dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="-5dp"
@@ -65,14 +65,15 @@
         app:layout_constraintTop_toBottomOf="@+id/distanceIconIV" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/beenThereStampIV"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginEnd="-5dp"
+        android:alpha="0.7"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/distanceIconIV"
         app:layout_constraintTop_toTopOf="parent"
-        android:alpha="0.7"
         app:srcCompat="@drawable/been_there_stamp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

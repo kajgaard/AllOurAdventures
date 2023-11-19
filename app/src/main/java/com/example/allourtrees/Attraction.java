@@ -81,4 +81,13 @@ public class Attraction {
                 ", price=" + price +
                 '}';
     }
+
+    public double getDistanceToAttraction(){
+
+        return(0.0);
+    }
+
+    public boolean hasBeenVisitedBefore(){
+        return true;
+    }
 }

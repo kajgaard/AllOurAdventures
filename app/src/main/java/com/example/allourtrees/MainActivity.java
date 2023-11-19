@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private List<Attraction> attractionList = new ArrayList<>();
+    public List<Attraction> attractionList = new ArrayList<>();
     public void getAttractionsFromCsv(){
         InputStream is = getResources().openRawResource(R.raw.attractions);
         BufferedReader reader = new BufferedReader(
@@ -78,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
             Log.wtf("FileInput", "Error handling data file on line: " + line, e);
         }
 
+    }
+
+    public List<Attraction> getAttractionList(){
+        return attractionList;
     }
 
 }

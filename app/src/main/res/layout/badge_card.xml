@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/activity_title_tv"
+        android:id="@+id/attractionShortDescriptionTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -44,8 +44,8 @@
         android:text="The is the badge description that might just be a few lines long"
         android:textSize="10sp"
         app:layout_constraintEnd_toStartOf="@+id/badge_progressBar"
-        app:layout_constraintStart_toStartOf="@+id/activity_title_tv"
-        app:layout_constraintTop_toBottomOf="@+id/activity_title_tv" />
+        app:layout_constraintStart_toStartOf="@+id/attractionShortDescriptionTV"
+        app:layout_constraintTop_toBottomOf="@+id/attractionShortDescriptionTV" />
 
     <TextView
         android:id="@+id/badge_current_progress"
