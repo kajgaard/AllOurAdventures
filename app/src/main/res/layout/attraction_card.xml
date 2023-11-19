@@ -21,7 +21,7 @@
 
     <TextView
         android:id="@+id/attraction_title_tv"
-        android:layout_width="278dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
@@ -30,5 +30,47 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/priceGroupIV"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/attraction_title_tv"
+        app:layout_constraintStart_toEndOf="@+id/attraction_title_tv"
+        app:layout_constraintTop_toTopOf="@+id/attraction_title_tv"
+        app:srcCompat="@drawable/price_4" />
+
+    <ImageView
+        android:id="@+id/distanceIconIV"
+        android:layout_width="35dp"
+        android:layout_height="34dp"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/distance_icon"
+        tools:layout_editor_absoluteX="350dp" />
+
+    <TextView
+        android:id="@+id/distanceTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="12 km"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/distanceIconIV"
+        app:layout_constraintStart_toStartOf="@+id/distanceIconIV"
+        app:layout_constraintTop_toBottomOf="@+id/distanceIconIV" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginEnd="-5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/distanceIconIV"
+        app:layout_constraintTop_toTopOf="parent"
+        android:alpha="0.7"
+        app:srcCompat="@drawable/been_there_stamp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
