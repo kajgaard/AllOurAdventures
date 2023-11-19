@@ -75,11 +75,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
 
             friendProfilePic = itemView.findViewById(R.id.friend_image);
             friendBadgePic = itemView.findViewById(R.id.badge_iv);
-            badgeName = itemView.findViewById(R.id.activity_main_title_tv);
+            badgeName = itemView.findViewById(R.id.attraction_title_tv);
             friendProfilePicHolder = itemView.findViewById(R.id.friend_picture_cv);
             friendPictureTaken = itemView.findViewById(R.id.activity_image);
             friendPicTakenHolder = itemView.findViewById(R.id.big_picture_cv);
-            adventureName = itemView.findViewById(R.id.activity_main_title_tv);
+            adventureName = itemView.findViewById(R.id.attraction_title_tv);
             friendName = itemView.findViewById(R.id.activity_title_tv);
         }
     }
