@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public List<Attraction> attractionList = new ArrayList<>();
     public void getAttractionsFromCsv(){
-        InputStream is = getResources().openRawResource(R.raw.attractions_wiki);
+        InputStream is = getResources().openRawResource(R.raw.attractions_new_11);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(is, StandardCharsets.UTF_8)
         );

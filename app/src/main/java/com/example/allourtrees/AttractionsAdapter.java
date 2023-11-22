@@ -1,5 +1,6 @@
 package com.example.allourtrees;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,22 +36,33 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
         if(attraction.hasBeenVisitedBefore()){
             holder.beenThereStamp.setVisibility(View.VISIBLE);
         }
-        if(attraction.getPrice()!=0){
+
             switch(attraction.getPrice()){
+                case 0:
+                    holder.priceGroup.setVisibility(View.INVISIBLE);
+                    Log.w("QLIST", "CASE 0");
+                    break;
                 case 1:
                     holder.priceGroup.setImageResource(R.drawable.price_1);
+                    Log.w("QLIST", "CASE 1");
                     break;
                 case 2:
                     holder.priceGroup.setImageResource(R.drawable.price_2);
+                    Log.w("QLIST", "CASE 2");
                     break;
                 case 3:
                     holder.priceGroup.setImageResource(R.drawable.price_3);
+                    Log.w("QLIST", "CASE 3");
                     break;
                 case 4:
                     holder.priceGroup.setImageResource(R.drawable.price_4);
+                    Log.w("QLIST", "CASE 4");
                     break;
+
+
             }
-        }
+        Log.e("QLIST", "Price is: " + attraction.getAttractionName() + ": " + attraction.getPrice());
+
 
 
     }
