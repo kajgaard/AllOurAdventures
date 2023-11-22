@@ -69,7 +69,7 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
         attractionList.forEach(a -> addOnlyNameToList(a));
         attractionField = binding.attractionET;
         ArrayAdapter adapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,listOfAttractionNames);
-        attractionField.setThreshold(1);
+        attractionField.setThreshold(0);
         attractionField.setAdapter(adapter);
         notesField = binding.notesET;
         dateField = binding.dateET;
@@ -106,6 +106,7 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener {
                ((MainActivity)getActivity()).navController.navigate(R.id.navigation_home);
                saveAdventure();
                Toast.makeText(getActivity(), "Adventure saved!", Toast.LENGTH_SHORT).show();
+               MainActivity.updateAlreadyVisitedAttractions();
            }else {
                Toast.makeText(getActivity(), "Nothing was entered, returning to home", Toast.LENGTH_SHORT).show();
                ((MainActivity)getActivity()).navController.popBackStack();

@@ -130,8 +130,18 @@ public class Attraction {
 
         return Math.sqrt(distance);
     }
-    public boolean hasBeenVisitedBefore(){
-        return true;
+    boolean hasBeenVisitedBefore(){
+
+        ArrayList<String> list = MainActivity.visitedAttractions;
+        for (String attraction : list){
+            if (attraction.equals(this.attractionName)){
+                Log.e("BEENTHERE", "Looking for "+ this.attractionName +"in visited attractions and found it");
+                int x = 10;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Location getCurrentLocation(){

@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.allourtrees.ui.new_entry.NewEntryFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomappbar.BottomAppBar;
@@ -33,6 +34,9 @@ import com.example.allourtrees.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -61,11 +65,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     BottomNavigationView navView;
 
-    FirebaseAuth fAuth;
+    static FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
 
     public NavController navController;
+
+    public static ArrayList<String> visitedAttractions = new ArrayList<>();
 
 
     @Override
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-
+        fAuth = FirebaseAuth.getInstance();
 
         newEntryBtn = binding.fab;
         newEntryBtn.setOnClickListener(this);
@@ -97,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         getLastLocation();
+        updateAlreadyVisitedAttractions();
 
     }
 
@@ -129,6 +136,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(this,"Location permission is denied, please allow this permission", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    public static void updateAlreadyVisitedAttractions(){
+
+        FirebaseFirestore fStore;
+        fStore = FirebaseFirestore.getInstance();
+
+        Query query = fStore.collection("users").document(fAuth.getUid()).collection("adventures");  // without ordering
+
+        query
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            visitedAttractions.add((String) document.get("attractionName").toString());
+                            Log.w("GETDB", document.getId() + " => " + document.getData());
+                        }
+
+                    } else {
+                        Log.w("GETDB", "Error getting documents: ", task.getException());
+                    }
+                });
+
+    }
+
+    public ArrayList<String> getVisitedAttractions() {
+        return visitedAttractions;
     }
 
     public List<Attraction> attractionList = new ArrayList<>();

@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.AttractionsViewHolder> {
@@ -35,6 +34,8 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
         holder.distanceToAttraction.setText(attraction.getDistanceToAttraction()+" km");
         if(attraction.hasBeenVisitedBefore()){
             holder.beenThereStamp.setVisibility(View.VISIBLE);
+        }else{
+            holder.beenThereStamp.setVisibility(View.INVISIBLE);
         }
 
             switch(attraction.getPrice()){
@@ -63,9 +64,8 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
             }
         Log.e("QLIST", "Price is: " + attraction.getAttractionName() + ": " + attraction.getPrice());
 
-
-
     }
+
 
     @Override
     public int getItemCount() {
