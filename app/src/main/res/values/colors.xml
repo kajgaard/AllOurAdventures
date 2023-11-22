@@ -11,4 +11,7 @@
     <color name="light_mint">#FFCFE6D5</color>
     <color name="green">#FF7ECD8B</color>
     <color name="darker_green">#FF4D9559</color>
+    <color name="darkest_green">#FF304848</color>
+    <color name="lighter_green">#FF6A836E</color>
+    <color name="brown">#FFC9BC97</color>
 </resources>

@@ -14,4 +14,9 @@
         <item name="android:windowTranslucentNavigation">true</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/brown</item>
+        <item name="colorOnPrimary">@color/darker_green</item>
+    </style>
 </resources>

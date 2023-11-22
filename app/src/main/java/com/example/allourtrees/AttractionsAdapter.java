@@ -41,22 +41,27 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
             switch(attraction.getPrice()){
                 case 0:
                     holder.priceGroup.setVisibility(View.INVISIBLE);
+                    //holder.attractionTitle.setText(attraction.getAttractionName()+ "");
                     Log.w("QLIST", "CASE 0");
                     break;
                 case 1:
                     holder.priceGroup.setImageResource(R.drawable.price_1);
+                    //holder.attractionTitle.setText(attraction.getAttractionName()+ "  $");
                     Log.w("QLIST", "CASE 1");
                     break;
                 case 2:
                     holder.priceGroup.setImageResource(R.drawable.price_2);
+                    //holder.attractionTitle.setText(attraction.getAttractionName()+ "  $$");
                     Log.w("QLIST", "CASE 2");
                     break;
                 case 3:
                     holder.priceGroup.setImageResource(R.drawable.price_3);
+                    //holder.attractionTitle.setText(attraction.getAttractionName()+ "  $$$");
                     Log.w("QLIST", "CASE 3");
                     break;
                 case 4:
                     holder.priceGroup.setImageResource(R.drawable.price_4);
+                    //holder.attractionTitle.setText(attraction.getAttractionName()+ "  $$$$");
                     Log.w("QLIST", "CASE 4");
                     break;
 
