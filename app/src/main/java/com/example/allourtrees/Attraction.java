@@ -9,6 +9,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Attraction {
     private static final double EARTH_RADIUS = 6371;
@@ -20,24 +21,12 @@ public class Attraction {
     String attractionDescriptionLong;
 
     int attractionDefaultPicture;
-    String attractionCategory;
+    ArrayList<String> attractionCategory;
 
     int price; //ranged from 0-4??
 
 
-
-
-    public Attraction(double longitude, double lattitude, String attractionName, String attractionDescriptionShort, String attractionDescriptionLong, int attractionDefaultPicture, String attractionCategory) {
-        this.longitude = longitude;
-        this.lattitude = lattitude;
-        this.attractionName = attractionName;
-        this.attractionDescriptionShort = attractionDescriptionShort;
-        this.attractionDescriptionLong = attractionDescriptionLong;
-        this.attractionCategory = attractionCategory;
-        this.attractionDefaultPicture = attractionDefaultPicture;
-    }
-
-    public Attraction(double lattitude, double longitude, String attractionName, String attractionDescriptionShort, String attractionDescriptionLong, int attractionDefaultPicture, String attractionCategory, int price) {
+    public Attraction(double lattitude, double longitude, String attractionName, String attractionDescriptionShort, String attractionDescriptionLong, int attractionDefaultPicture, ArrayList<String> attractionCategory, int price) {
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.attractionName = attractionName;
@@ -73,7 +62,7 @@ public class Attraction {
         return attractionDefaultPicture;
     }
 
-    public String getAttractionCategory() {
+    public ArrayList<String> getAttractionCategory() {
         return attractionCategory;
     }
 

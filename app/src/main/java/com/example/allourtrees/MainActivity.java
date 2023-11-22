@@ -31,6 +31,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.allourtrees.databinding.ActivityMainBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,7 +40,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavController.OnDestinationChangedListener {
 
@@ -52,12 +57,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final int FINE_PERMISSION_CODE = 1;
     public static Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
-    boolean fabFlag = false;
+    public boolean fabFlag = false;
 
     BottomNavigationView navView;
 
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    String userID;
 
-    NavController navController;
+    public NavController navController;
 
 
     @Override
@@ -125,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public List<Attraction> attractionList = new ArrayList<>();
     public void getAttractionsFromCsv(){
-        InputStream is = getResources().openRawResource(R.raw.attractions);
+        InputStream is = getResources().openRawResource(R.raw.attractions_wiki);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(is, StandardCharsets.UTF_8)
         );
@@ -138,7 +146,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String[] tokens = line.split(";");
 
                 //Read the data
-                Attraction attraction = new Attraction(Double.valueOf(tokens[0]), Double.valueOf(tokens[1]), tokens[2], tokens[3], tokens[4], Integer.parseInt(tokens[5]), tokens[6], Integer.parseInt(tokens[7]));
+                //for wiki data
+                Attraction attraction = new Attraction(Double.valueOf(tokens[4]), Double.valueOf(tokens[5]), tokens[0].replace("_", " "), tokens[1], tokens[2].replaceAll("\\n", ""), Integer.parseInt(tokens[7]), fromStringToArray(tokens[3]), Integer.parseInt(tokens[6]));
+
+                //for demo data
+                //Attraction attraction = new Attraction(Double.valueOf(tokens[0]), Double.valueOf(tokens[1]), tokens[2], tokens[3], tokens[4], Integer.parseInt(tokens[5]), fromStringToArray(tokens[6]), Integer.parseInt(tokens[7]));
                 attractionList.add(attraction);
 
                 Log.w("MARIA", "Just created: " + attraction);
@@ -148,6 +160,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+    public ArrayList<String> fromStringToArray(String starterString){
+
+            // Step 1: Remove square brackets and single quotes
+            String cleanedString = starterString.replaceAll("[\\[\\]']", "");
+
+            // Step 2: Split the string into an array using commas as a delimiter
+            String[] elements = cleanedString.split(",\\s*");
+
+            // Step 3: Create an ArrayList and add elements from the array
+            ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(elements));
+
+            // Print the ArrayList
+            System.out.println(arrayList);
+            return arrayList;
+        }
+
 
     public List<Attraction> getAttractionList(){
         return attractionList;
@@ -162,15 +191,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(fabFlag){
             if(view == newEntryBtn){
-                navController.popBackStack();
-                navController.navigate(R.id.navigation_home);
+                Log.e("BUTTON", "I am main, and should close"); //Is never used because fragment overrides clicklistener when the frag is open
+                //navController.popBackStack();
+                //navController.navigate(R.id.navigation_home);
 
             }
         }else{ //New entry should be opened
             if(view == newEntryBtn){
                 navController.popBackStack();
+                Log.e("BUTTON", "I am main, and should open");
+
                 navController.navigate(R.id.navigation_new_entry);
-                Toast.makeText(this, "Button pressed", Toast.LENGTH_SHORT).show();
 
                 uncheckAllItems(this.navView);
             }
@@ -192,12 +223,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(navDestination.getId() == R.id.navigation_new_entry){
             newEntryBtn.setImageResource(R.drawable.done_icon);
             fabFlag = true;
-            Log.w("NAVIGATION", "Destination is FAB and flag is: " + fabFlag);
+            Log.w("BUTTON", "Destination is FAB and flag is: " + fabFlag);
 
         }else{
             newEntryBtn.setImageResource(R.drawable.add_icon);
             fabFlag = false;
-            Log.w("NAVIGATION", "Destination is NOT FAB and flag is: " + fabFlag);
+            newEntryBtn.setOnClickListener(this);
+            Log.w("BUTTON", "Destination is NOT FAB and flag is: " + fabFlag);
 
         }
     }
