@@ -34,4 +34,12 @@ public class BadgeItem {
         this.currentProgress = currentProgress;
         this.progressForFull = progressForFull;
     }
+
+    public void addProgress(){
+        this.currentProgress++;
+    }
+
+    public void setCurrentProgress(int currentProgress) {
+        this.currentProgress = currentProgress;
+    }
 }

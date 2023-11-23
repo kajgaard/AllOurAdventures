@@ -25,8 +25,8 @@ public class UserDataController {
     String userName;
     String userID;
 
-    public  ArrayList<String> visitedAttractions = new ArrayList<>();
-    public  ArrayList<String> visitedAttractionsDates = new ArrayList<>();
+    public static ArrayList<String> visitedAttractions = new ArrayList<>();
+    public static ArrayList<String> visitedAttractionsDates = new ArrayList<>();
 
     // Static variable reference of single_instance
     // of type Singleton
@@ -67,10 +67,12 @@ public class UserDataController {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             visitedAttractions.add((String) document.get("attractionName").toString());
                             visitedAttractionsDates.add((String) document.get("visitDate").toString());
-                            ArrayList list = new ArrayList<>();
-                            firebaseCallBack.onCallback(list);
+
+
                             Log.w("GETDB", document.getId() + " => " + document.getData());
                         }
+                        ArrayList list = new ArrayList<>();
+                        firebaseCallBack.onCallback(list);
 
                     } else {
                         Log.w("GETDB", "Error getting documents: ", task.getException());

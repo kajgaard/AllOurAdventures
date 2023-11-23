@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.allourtrees.Attraction;
 import com.example.allourtrees.BadgeAdapter;
 import com.example.allourtrees.BadgeItem;
 import com.example.allourtrees.CommunityActivityItem;
@@ -93,18 +94,28 @@ public class HomeFragment extends Fragment {
         textView = binding.nameOfUserTV;
         textView.setText("");
         userDataController.getUserNameFromDB(valueList -> textView.setText(userDataController.getUserName().substring(0,userDataController.getUserName().indexOf(" "))));
-        userDataController.getAlreadyVisitedAttractionsFromDB(valueList -> setSatistics());
+        userDataController.getAlreadyVisitedAttractionsFromDB(valueList -> {
+
+            badgeList = generateBadgeItems();
 
 
-        badgeList = generateBadgeItems();
+            setSatistics();
+            updateBadgeProgress();
 
-        //badgeRecyclerView = rootView.findViewById(R.id.badges_recyclerview); //From tutorial, but using binding is easier :))
-        badgeRecyclerView = binding.badgesRecyclerview;
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        badgeRecyclerView.setLayoutManager(layoutManager);
-        badgeAdapter = new BadgeAdapter(badgeList);
-        badgeRecyclerView.setAdapter(badgeAdapter);
+
+            //badgeRecyclerView = rootView.findViewById(R.id.badges_recyclerview); //From tutorial, but using binding is easier :))
+            badgeRecyclerView = binding.badgesRecyclerview;
+            LinearLayoutManager layoutManager
+                    = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            badgeRecyclerView.setLayoutManager(layoutManager);
+            badgeAdapter = new BadgeAdapter(badgeList);
+            badgeRecyclerView.setAdapter(badgeAdapter);
+
+
+        });
+
+
+
 
         /////////////////////////////////////////////////////////////
 
@@ -128,16 +139,166 @@ public class HomeFragment extends Fragment {
 
 
 
+
         return root;
     }
 
     private List<BadgeItem> generateBadgeItems(){
         //Should be fetched from db
         List<BadgeItem> dummyBadgeItems = new ArrayList<>();
-        dummyBadgeItems.add(new BadgeItem(R.drawable.novice_explorer_badge,"Novice Explorer Badge","Make 50 total discoveries to achieve this bagde",43,50));
-        dummyBadgeItems.add(new BadgeItem(R.drawable.church_badge,"The Pilgrim Badge","Visit all the 10 danish cathedrals",2,10));
-        dummyBadgeItems.add(new BadgeItem(R.drawable.troll_badge,"The Trolls of Denmark Badge","Visit all the trolls in Denmark made by the artist Thomas Dambo",7,26));
+        //dummyBadgeItems.add(new BadgeItem(R.drawable.novice_explorer_badge,"Novice Explorer Badge","Make 50 total discoveries to achieve this bagde",43,50));
+        //dummyBadgeItems.add(new BadgeItem(R.drawable.church_badge,"The Pilgrim Badge","Visit all the 10 danish cathedrals",2,10));
+        //dummyBadgeItems.add(new BadgeItem(R.drawable.troll_badge,"The Trolls of Denmark Badge","Visit all the trolls in Denmark made by the artist Thomas Dambo",7,26));
+
+        dummyBadgeItems.add(new BadgeItem(R.drawable.novice_explorer_badge, "Discovery Quest","Embark on an epic expedition by visiting all the attractions", 0, 35));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.nature_badge, "Eco Explorer","Navigate the nurturing nooks of nature by visiting all of the wonderful nature sites", 0, 3));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.park_badge, "Green Oasis Guru","Pounce on a picturesque park pilgrimage and visit all of the parks", 0, 4));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.teater_badge, "Stage Maestro","Thrust yourself into the thrilling realm of theaters and visit all of the theaters", 0, 5));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.aquarium_badge, "Aqua Ambassador","Appreciate an awe-inspiring array of Aquariums, by visiting all the aquariums", 0, 3));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.museum_badge, "Museum Master","Discover a magnificent maze of museums by visiting all the museums", 0, 14));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.history_badge, "Time Traveler","Heightening your historical horizon by visiting all the historical sites", 0, 5));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.centre_badge, "Center Chase","Celebrate the captivating corridors by visiting all the centers", 0, 3));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.resort_badge, "Paradise Pursuit","Realize a rejuvenating retreat by visiting all the resorts", 0, 1));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.castle_badge, "Fortress Connoisseur","Conquer the colossal charm of past times by visiting all the castles", 0, 5));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.zoo_badge, "Wild Warden","Zip into the wild world by visiting all the zoos", 0, 7));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.amusement_badge, "Joyride Juggernaut","Pursue an adrenaline-filled adventure by visiting all the amusement parks", 0, 7));
+
+
         return dummyBadgeItems;
+    }
+
+    void updateBadgeProgress(){
+        ArrayList<String> visitedAttractions1= null;
+        visitedAttractions1 = userDataController.getVisitedAttractions();
+
+
+
+        List<Attraction> allAttractions= null;
+        allAttractions = ((MainActivity)getActivity()).getAttractionList();
+
+        Log.e("BADGESS", "AttrationsList: "+allAttractions.size());
+        Log.e("BADGESS", "VisitedList: "+visitedAttractions1);
+        for(String visit : visitedAttractions1){
+
+
+            for(Attraction attraction : allAttractions){
+
+                if(attraction.getAttractionName().equals(visit)){
+                    Log.w("BADGESS","Found match in list for:"+ visit);
+                    for(BadgeItem badge : badgeList){
+                        if(badge.getBadgeName().equals("Discovery Quest")){
+                            badge.addProgress();
+                        }
+                    }
+
+                    for(String category : attraction.getAttractionCategory()){
+                        Log.w("BADGESS","Categories for attraction: "+visit+" List: "+attraction.getAttractionCategory());
+
+                        switch (category) {
+
+                            case "Castle":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Fortress Connoisseur")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and CASTLE");
+
+                                    }
+                                }
+                                break;
+                            case "Nature":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Eco Explorer")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and NATURE");
+
+                                    }
+                                }
+                                break;
+                            case "Park":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Green Oasis Guru")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and PARK");
+
+                                    }
+                                }
+                                break;
+                            case "Theatre":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Stage Maestro")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and TEATER");
+
+                                    }
+                                }
+                                break;
+                            case "Aquarium":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Aqua Ambassador")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and AQUARIUM");
+
+                                    }
+                                }
+                                break;
+                            case "Museum":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Museum Master")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and MUSEUM");
+                                    }
+                                }
+                                break;
+                            case "History":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Time Traveler")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and HISTORY");
+
+                                    }
+                                }
+                                break;
+                            case "Center":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Center Chase")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and CENTER");
+
+                                    }
+                                }
+                                break;
+                            case "Resort":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Paradise Pursuit")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and RESORT");
+
+                                    }
+                                }
+                                break;
+                            case "Zoo":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Wild Warden")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and ZOO");
+
+                                    }
+                                }
+                                break;
+                            case "Amusement park":
+                                for(BadgeItem badge : badgeList){
+                                    if(badge.getBadgeName().equals("Joyride Juggernaut")){
+                                        badge.addProgress();
+                                        Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and AMUSEMENT");
+
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private List<CommunityActivityItem> generateCommunityActivityItems(){
@@ -154,11 +315,14 @@ public class HomeFragment extends Fragment {
     }
 
     public void setSatistics(){
+
+
+
         ArrayList<String> visitedAttractions= null;
         visitedAttractions = userDataController.getVisitedAttractions();
         ArrayList<String> visitedAttractionsDates = null;
         visitedAttractionsDates = userDataController.getVisitedAttractionsDates();
-
+        Log.e("BADGESS", "VisitedList FROM STATS: "+visitedAttractions);
         this.numberOfAdventuresAllTime = visitedAttractions.size();
         this.numberOfAttractionsThisYear = 0;
         this.numberOfAttractionsThisMonth = 0;
