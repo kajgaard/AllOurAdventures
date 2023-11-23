@@ -34,6 +34,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +58,7 @@ public class HomeFragment extends Fragment {
 
     //////////////////////////////////
 
-    private List<BadgeItem> badgeList;
+    private ArrayList<BadgeItem> badgeList;
     private RecyclerView badgeRecyclerView;
     private BadgeAdapter badgeAdapter;
 
@@ -102,6 +104,10 @@ public class HomeFragment extends Fragment {
             setSatistics();
             updateBadgeProgress();
 
+            Log.e("BADGELIST", "Before sort: " + badgeList.toString());
+            sortListByAttribute(badgeList);
+            Log.e("BADGELIST", "After sort: " + badgeList.toString());
+
 
             //badgeRecyclerView = rootView.findViewById(R.id.badges_recyclerview); //From tutorial, but using binding is easier :))
             badgeRecyclerView = binding.badgesRecyclerview;
@@ -143,9 +149,20 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    private List<BadgeItem> generateBadgeItems(){
+    // Method to sort the list based on the 'myAttribute' attribute
+    private void sortListByAttribute(ArrayList<BadgeItem> list) {
+        list.sort(new Comparator<BadgeItem>() {
+            @Override
+            public int compare(BadgeItem obj1, BadgeItem obj2) {
+                // Compare based on the 'myAttribute' attribute
+                return Integer.compare(obj2.getPercentFinished(), obj1.getPercentFinished());
+            }
+        });
+    }
+    private ArrayList<BadgeItem> generateBadgeItems(){
         //Should be fetched from db
-        List<BadgeItem> dummyBadgeItems = new ArrayList<>();
+
+        ArrayList<BadgeItem> dummyBadgeItems = new ArrayList<>();
         //dummyBadgeItems.add(new BadgeItem(R.drawable.novice_explorer_badge,"Novice Explorer Badge","Make 50 total discoveries to achieve this bagde",43,50));
         //dummyBadgeItems.add(new BadgeItem(R.drawable.church_badge,"The Pilgrim Badge","Visit all the 10 danish cathedrals",2,10));
         //dummyBadgeItems.add(new BadgeItem(R.drawable.troll_badge,"The Trolls of Denmark Badge","Visit all the trolls in Denmark made by the artist Thomas Dambo",7,26));
@@ -285,7 +302,7 @@ public class HomeFragment extends Fragment {
                                     }
                                 }
                                 break;
-                            case "Amusement park":
+                            case "Amusement Park":
                                 for(BadgeItem badge : badgeList){
                                     if(badge.getBadgeName().equals("Joyride Juggernaut")){
                                         badge.addProgress();
