@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.AttractionsViewHolder> {
@@ -31,7 +33,12 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
         Attraction attraction = attractionList.get(position);
         holder.attractionTitle.setText(attraction.getAttractionName());
         holder.attractionDescriptionShort.setText(attraction.getAttractionDescriptionShort());
-        holder.distanceToAttraction.setText(attraction.getDistanceToAttraction()+" km");
+        if(attraction.getDistanceToAttraction()>5){
+            int noDecimalDouble = (int) attraction.getDistanceToAttraction();
+            holder.distanceToAttraction.setText(noDecimalDouble+" km");
+        }else{
+            holder.distanceToAttraction.setText(attraction.getDistanceToAttraction()+" km");
+        }
         if(attraction.hasBeenVisitedBefore()){
             holder.beenThereStamp.setVisibility(View.VISIBLE);
         }else{

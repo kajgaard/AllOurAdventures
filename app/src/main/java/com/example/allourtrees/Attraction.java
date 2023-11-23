@@ -89,7 +89,12 @@ public class Attraction {
         if(currentLocation != null) {
             double distanceInMeters = calculateDistance(currentLocation.getLatitude(), getLattitude(), currentLocation.getLongitude(), getLongitude(), 0, 0);
             double distanceInKm = distanceInMeters / 1000;
-            distanceInKm = round(distanceInKm, 1);
+            if(distanceInKm > 5){
+                distanceInKm = round(distanceInKm, 0);
+                distanceInKm = Double.parseDouble(new DecimalFormat("#").format(distanceInKm));
+            }else{
+                distanceInKm = round(distanceInKm, 1);
+            }
             Log.w("MARIA", "Using values:\nCurrent pos Lat: " + currentLocation.getLatitude() + "\nCurrent pos Lon: " + currentLocation.getLongitude() + "\nAttraction lat: " + getLattitude() + "\n Attraction Lon: " + getLongitude() + "\n DISTANCE IS: " + distanceInKm);
             return (distanceInKm);
         }else{
