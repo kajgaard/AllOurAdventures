@@ -72,14 +72,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public NavController navController;
 
     public static ArrayList<String> visitedAttractions = new ArrayList<>();
+    public static ArrayList<String> visitedAttractionsDates = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fAuth = FirebaseAuth.getInstance();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        updateAlreadyVisitedAttractions();
 
         navView = findViewById(R.id.nav_view);
 
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-        fAuth = FirebaseAuth.getInstance();
+
 
         newEntryBtn = binding.fab;
         newEntryBtn.setOnClickListener(this);
@@ -103,9 +107,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         getLastLocation();
-        updateAlreadyVisitedAttractions();
+
 
     }
+    
 
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -151,6 +156,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             visitedAttractions.add((String) document.get("attractionName").toString());
+                            visitedAttractionsDates.add((String) document.get("visitDate").toString());
+
                             Log.w("GETDB", document.getId() + " => " + document.getData());
                         }
 

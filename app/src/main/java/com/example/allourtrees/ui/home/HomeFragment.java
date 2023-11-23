@@ -1,6 +1,7 @@
 package com.example.allourtrees.ui.home;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,8 +33,15 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -46,6 +55,11 @@ public class HomeFragment extends Fragment {
     String userName;
     String userID;
 
+    int numberOfAdventuresAllTime = 0;
+    int numberOfAttractionsThisWeek = 0;
+    int numberOfAttractionsThisMonth = 0;
+    int numberOfAttractionsThisYear = 0;
+
     //////////////////////////////////
 
     private List<BadgeItem> badgeList;
@@ -57,10 +71,13 @@ public class HomeFragment extends Fragment {
     private RecyclerView communityRecyclerView;
     private CommunityAdapter communityAdapter;
 
+    TextView statAllTime, statWeek, statMonth, statYear;
+
     public HomeFragment(){
         //Required empty constructor (idfk)
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -71,6 +88,9 @@ public class HomeFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
+
+
+        setSatistics();
 
 
 
@@ -100,6 +120,15 @@ public class HomeFragment extends Fragment {
         communityRecyclerView.setLayoutManager(layoutManager1);
         communityAdapter = new CommunityAdapter(communityActivityItemList);
         communityRecyclerView.setAdapter(communityAdapter);
+
+        statAllTime = binding.totalDiscCountTV;
+        statAllTime.setText(numberOfAdventuresAllTime+"");
+        statYear = binding.thisYearCount;
+        statYear.setText(numberOfAttractionsThisYear+"");
+        statMonth = binding.thisMonthCount;
+        statMonth.setText(numberOfAttractionsThisMonth+"");
+        statWeek = binding.thisWeekCount;
+        statWeek.setText(numberOfAttractionsThisWeek+"");
 
         updateData();
 
@@ -152,6 +181,71 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setSatistics(){
+        ArrayList<String> visitedAttractions = MainActivity.visitedAttractions;
+        ArrayList<String> visitedAttractionsDates = MainActivity.visitedAttractionsDates;
+
+        numberOfAdventuresAllTime = visitedAttractions.size();
+        numberOfAttractionsThisYear = 0;
+        numberOfAttractionsThisMonth = 0;
+        numberOfAttractionsThisWeek = 0;
+
+        for(String visit : visitedAttractionsDates){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd. MMM. yyyy", Locale.ENGLISH);
+
+            // Assume currentDate is the current date and oldDate is the date to compare
+            Date currentDate = new Date();
+            Date oldDate = null;
+            try {
+                oldDate = dateFormat.parse(visit);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
+            // Calculate the difference in milliseconds
+            long differenceInMillis = currentDate.getTime() - oldDate.getTime();
+
+            // Convert the difference to days
+            long differenceInDays = differenceInMillis / (24 * 60 * 60 * 1000);
+
+            if (differenceInDays >= 8) {
+                Log.e("MSTATS", "The date is a week or more old." + visit);
+                numberOfAttractionsThisMonth++;
+                numberOfAttractionsThisYear++;
+            }else {
+                numberOfAttractionsThisWeek++;
+                numberOfAttractionsThisMonth++;
+                numberOfAttractionsThisYear++;
+                Log.e("MSTATS", "The less than a week old." + visit);
+            }
+
+            // Check if the date is a month or more old
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(oldDate);
+            calendar.add(Calendar.MONTH, 1);
+
+            if (currentDate.after(calendar.getTime())) {
+                Log.e("MSTATS", "The date is a month or more old." + visit);
+                numberOfAttractionsThisYear++;
+            }
+
+           // // Check if the date is a year or more old
+           // calendar.setTime(oldDate);
+           // calendar.add(Calendar.YEAR, 1);
+//
+           // if (currentDate.after(calendar.getTime())) {
+           //     System.out.println("The date is a year or more old.");
+           // }
+        }
+
+
+        }
+
+
+
+
 
 }
 
