@@ -1,5 +1,6 @@
 package com.example.allourtrees;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.AttractionsViewHolder> {
@@ -31,29 +33,51 @@ public class AttractionsAdapter extends RecyclerView.Adapter<AttractionsAdapter.
         Attraction attraction = attractionList.get(position);
         holder.attractionTitle.setText(attraction.getAttractionName());
         holder.attractionDescriptionShort.setText(attraction.getAttractionDescriptionShort());
-        holder.distanceToAttraction.setText(attraction.getDistanceToAttraction()+" km");
+        if(attraction.getDistanceToAttraction()>5){
+            int noDecimalDouble = (int) attraction.getDistanceToAttraction();
+            holder.distanceToAttraction.setText(noDecimalDouble+" km");
+        }else{
+            holder.distanceToAttraction.setText(attraction.getDistanceToAttraction()+" km");
+        }
         if(attraction.hasBeenVisitedBefore()){
             holder.beenThereStamp.setVisibility(View.VISIBLE);
+        }else{
+            holder.beenThereStamp.setVisibility(View.INVISIBLE);
         }
-        if(attraction.getPrice()!=0){
+
             switch(attraction.getPrice()){
+                case 0:
+                    holder.priceGroup.setVisibility(View.INVISIBLE);
+                    //holder.attractionTitle.setText(attraction.getAttractionName()+ "");
+                    Log.w("QLIST", "CASE 0");
+                    break;
                 case 1:
                     holder.priceGroup.setImageResource(R.drawable.price_1);
+                    //holder.attractionTitle.setText(attraction.getAttractionName()+ "  $");
+                    Log.w("QLIST", "CASE 1");
                     break;
                 case 2:
                     holder.priceGroup.setImageResource(R.drawable.price_2);
+                    //holder.attractionTitle.setText(attraction.getAttractionName()+ "  $$");
+                    Log.w("QLIST", "CASE 2");
                     break;
                 case 3:
                     holder.priceGroup.setImageResource(R.drawable.price_3);
+                    //holder.attractionTitle.setText(attraction.getAttractionName()+ "  $$$");
+                    Log.w("QLIST", "CASE 3");
                     break;
                 case 4:
                     holder.priceGroup.setImageResource(R.drawable.price_4);
+                    //holder.attractionTitle.setText(attraction.getAttractionName()+ "  $$$$");
+                    Log.w("QLIST", "CASE 4");
                     break;
-            }
-        }
 
+
+            }
+        Log.e("QLIST", "Price is: " + attraction.getAttractionName() + ": " + attraction.getPrice());
 
     }
+
 
     @Override
     public int getItemCount() {

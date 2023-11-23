@@ -11,27 +11,27 @@ public class Adventure {
     public Adventure(String attractionName, String visitDate){
         this.attractionName = attractionName;
         this.visitDate = visitDate;
-        String randomId = getRandomNumberString();
-        String uniqeId = randomId+this.visitDate.trim();
-        uniqeId = adventureId;
+        //String randomId = getRandomNumberString();
+        //String uniqeId = randomId+this.visitDate.trim();
+        //uniqeId = adventureId;
     }
 
     public Adventure(String attractionName, String visitDate, String notes){
         this.attractionName = attractionName;
         this.visitDate = visitDate;
         this.notes = notes;
-        String randomId = getRandomNumberString();
-        String uniqeId = randomId+this.visitDate.trim();
-        uniqeId = adventureId;
+        //String randomId = getRandomNumberString();
+        //String uniqeId = randomId+this.visitDate.trim();
+        //uniqeId = adventureId;
     }
 
     public Adventure(String attractionName, String visitDate, int imageTaken){
         this.attractionName = attractionName;
         this.visitDate = visitDate;
         this.imageTaken = imageTaken;
-        String randomId = getRandomNumberString();
-        String uniqeId = randomId+this.visitDate.trim();
-        uniqeId = adventureId;
+        //String randomId = getRandomNumberString();
+        //String uniqeId = randomId+this.visitDate.trim();
+        //uniqeId = adventureId;
     }
 
     public Adventure(String attractionName, String visitDate, String notes, int imageTaken){
@@ -39,9 +39,9 @@ public class Adventure {
         this.visitDate = visitDate;
         this.imageTaken = imageTaken;
         this.notes = notes;
-        String randomId = getRandomNumberString();
-        String uniqeId = randomId+this.visitDate.trim();
-        uniqeId = adventureId;
+        //String randomId = getRandomNumberString();
+        //String uniqeId = randomId+this.visitDate.trim();
+        //uniqeId = adventureId;
     }
 
     //Getters

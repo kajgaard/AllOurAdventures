@@ -9,6 +9,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Attraction {
     private static final double EARTH_RADIUS = 6371;
@@ -20,24 +21,12 @@ public class Attraction {
     String attractionDescriptionLong;
 
     int attractionDefaultPicture;
-    String attractionCategory;
+    ArrayList<String> attractionCategory;
 
     int price; //ranged from 0-4??
 
 
-
-
-    public Attraction(double longitude, double lattitude, String attractionName, String attractionDescriptionShort, String attractionDescriptionLong, int attractionDefaultPicture, String attractionCategory) {
-        this.longitude = longitude;
-        this.lattitude = lattitude;
-        this.attractionName = attractionName;
-        this.attractionDescriptionShort = attractionDescriptionShort;
-        this.attractionDescriptionLong = attractionDescriptionLong;
-        this.attractionCategory = attractionCategory;
-        this.attractionDefaultPicture = attractionDefaultPicture;
-    }
-
-    public Attraction(double lattitude, double longitude, String attractionName, String attractionDescriptionShort, String attractionDescriptionLong, int attractionDefaultPicture, String attractionCategory, int price) {
+    public Attraction(double lattitude, double longitude, String attractionName, String attractionDescriptionShort, String attractionDescriptionLong, int attractionDefaultPicture, ArrayList<String> attractionCategory, int price) {
         this.longitude = longitude;
         this.lattitude = lattitude;
         this.attractionName = attractionName;
@@ -73,7 +62,7 @@ public class Attraction {
         return attractionDefaultPicture;
     }
 
-    public String getAttractionCategory() {
+    public ArrayList<String> getAttractionCategory() {
         return attractionCategory;
     }
 
@@ -97,11 +86,20 @@ public class Attraction {
 
     public double getDistanceToAttraction(){
         Location currentLocation = getCurrentLocation();
-        double distanceInMeters = calculateDistance(currentLocation.getLatitude(), getLattitude(), currentLocation.getLongitude(), getLongitude(),0,0);
-        double distanceInKm = distanceInMeters/1000;
-        distanceInKm = round(distanceInKm,1);
-        Log.w("MARIA", "Using values:\nCurrent pos Lat: " + currentLocation.getLatitude() + "\nCurrent pos Lon: " + currentLocation.getLongitude() + "\nAttraction lat: " + getLattitude() + "\n Attraction Lon: " + getLongitude() + "\n DISTANCE IS: "+distanceInKm);
-        return(distanceInKm);
+        if(currentLocation != null) {
+            double distanceInMeters = calculateDistance(currentLocation.getLatitude(), getLattitude(), currentLocation.getLongitude(), getLongitude(), 0, 0);
+            double distanceInKm = distanceInMeters / 1000;
+            if(distanceInKm > 5){
+                distanceInKm = round(distanceInKm, 0);
+                distanceInKm = Double.parseDouble(new DecimalFormat("#").format(distanceInKm));
+            }else{
+                distanceInKm = round(distanceInKm, 1);
+            }
+            Log.w("MARIA", "Using values:\nCurrent pos Lat: " + currentLocation.getLatitude() + "\nCurrent pos Lon: " + currentLocation.getLongitude() + "\nAttraction lat: " + getLattitude() + "\n Attraction Lon: " + getLongitude() + "\n DISTANCE IS: " + distanceInKm);
+            return (distanceInKm);
+        }else{
+            return(0.0);
+        }
     }
 
     private static double round (double value, int precision) {
@@ -137,8 +135,18 @@ public class Attraction {
 
         return Math.sqrt(distance);
     }
-    public boolean hasBeenVisitedBefore(){
-        return true;
+    boolean hasBeenVisitedBefore(){
+
+        ArrayList<String> list = MainActivity.visitedAttractions;
+        for (String attraction : list){
+            if (attraction.equals(this.attractionName)){
+                Log.e("BEENTHERE", "Looking for "+ this.attractionName +"in visited attractions and found it");
+                int x = 10;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public Location getCurrentLocation(){

@@ -3,43 +3,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="115dp"
     android:layout_marginBottom="10dp"
     android:background="@drawable/attraction_card_background">
 
 
     <TextView
         android:id="@+id/attractionShortDescriptionTV"
-        android:layout_width="278dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="-5dp"
-        android:text="I am a super short description of the attraction that is being pulled from wikipeadia "
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="5dp"
+        android:maxLines="3"
+        android:text="The National Museum of Denmark (Nationalmuseet) in Copenhagen is Denmark's largest museum of cultural history, comprising the histories of Danish and foreign cultures, alike."
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/distanceTV"
         app:layout_constraintStart_toStartOf="@+id/attraction_title_tv"
-        app:layout_constraintTop_toBottomOf="@+id/attraction_title_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/priceGroupIV" />
 
     <TextView
         android:id="@+id/attraction_title_tv"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:text="Designmuseum Denmark"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:lineSpacingExtra="-5dp"
+        android:maxWidth="280dp"
+        android:text="Natural Hoistory Museum of Denmark"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/distanceIconIV"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/priceGroupIV"
-        android:layout_width="45dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="1dp"
-        app:layout_constraintBottom_toBottomOf="@+id/attraction_title_tv"
-        app:layout_constraintStart_toEndOf="@+id/attraction_title_tv"
-        app:layout_constraintTop_toTopOf="@+id/attraction_title_tv"
+        android:layout_width="35dp"
+        android:layout_height="15dp"
+        android:layout_marginTop="-2dp"
+        app:layout_constraintStart_toStartOf="@+id/attraction_title_tv"
+        app:layout_constraintTop_toBottomOf="@+id/attraction_title_tv"
         app:srcCompat="@drawable/price_4" />
 
     <ImageView
