@@ -1,9 +1,7 @@
 package com.example.allourtrees.ui.home;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -35,15 +31,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class HomeFragment extends Fragment {
 
@@ -70,6 +63,7 @@ public class HomeFragment extends Fragment {
     private List<CommunityActivityItem> communityActivityItemList;
     private RecyclerView communityRecyclerView;
     private CommunityAdapter communityAdapter;
+    UserDataController userDataController = UserDataController.getInstance();
 
     TextView statAllTime, statWeek, statMonth, statYear;
 
@@ -85,12 +79,10 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
 
+
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
-
-
-        setSatistics();
 
 
 
@@ -99,6 +91,10 @@ public class HomeFragment extends Fragment {
 
         //textView = rootView.findViewById(R.id.name_of_user_TV); //From tutorial, but using binding is easier :))
         textView = binding.nameOfUserTV;
+        textView.setText("");
+        userDataController.getUserNameFromDB(valueList -> textView.setText(userDataController.getUserName().substring(0,userDataController.getUserName().indexOf(" "))));
+        userDataController.getAlreadyVisitedAttractionsFromDB(valueList -> setSatistics());
+
 
         badgeList = generateBadgeItems();
 
@@ -122,17 +118,15 @@ public class HomeFragment extends Fragment {
         communityRecyclerView.setAdapter(communityAdapter);
 
         statAllTime = binding.totalDiscCountTV;
-        statAllTime.setText(numberOfAdventuresAllTime+"");
+        statAllTime.setText("");
         statYear = binding.thisYearCount;
-        statYear.setText(numberOfAttractionsThisYear+"");
+        statYear.setText("");
         statMonth = binding.thisMonthCount;
-        statMonth.setText(numberOfAttractionsThisMonth+"");
+        statMonth.setText("");
         statWeek = binding.thisWeekCount;
-        statWeek.setText(numberOfAttractionsThisWeek+"");
+        statWeek.setText("");
 
-        updateData();
 
-        //return rootView;
 
         return root;
     }
@@ -159,88 +153,86 @@ public class HomeFragment extends Fragment {
         return dummyCommunityItems;
     }
 
-    public void updateData(){
-        DocumentReference docRef = db.collection("users").document(userID);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-
-                        Map<String, Object> data = document.getData();
-                        userName = data.get("name").toString();
-                        textView.setText(""+userName);
-
-                    } else {
-
-                    }
-                } else {
-                    Log.d("MARIA", "get failed with ", task.getException());
-                }
-            }
-        });
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void setSatistics(){
-        ArrayList<String> visitedAttractions = MainActivity.visitedAttractions;
-        ArrayList<String> visitedAttractionsDates = MainActivity.visitedAttractionsDates;
+        ArrayList<String> visitedAttractions= null;
+        visitedAttractions = userDataController.getVisitedAttractions();
+        ArrayList<String> visitedAttractionsDates = null;
+        visitedAttractionsDates = userDataController.getVisitedAttractionsDates();
 
-        numberOfAdventuresAllTime = visitedAttractions.size();
-        numberOfAttractionsThisYear = 0;
-        numberOfAttractionsThisMonth = 0;
-        numberOfAttractionsThisWeek = 0;
+        this.numberOfAdventuresAllTime = visitedAttractions.size();
+        this.numberOfAttractionsThisYear = 0;
+        this.numberOfAttractionsThisMonth = 0;
+        this.numberOfAttractionsThisWeek = 0;
 
         for(String visit : visitedAttractionsDates){
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd. MMM. yyyy", Locale.ENGLISH);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
 
             // Assume currentDate is the current date and oldDate is the date to compare
             Date currentDate = new Date();
-            Date oldDate = null;
+            Date dateToCheck = null;
             try {
-                oldDate = dateFormat.parse(visit);
+                dateToCheck = dateFormat.parse(visit);
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }
-
-            // Calculate the difference in milliseconds
-            long differenceInMillis = currentDate.getTime() - oldDate.getTime();
-
-            // Convert the difference to days
-            long differenceInDays = differenceInMillis / (24 * 60 * 60 * 1000);
-
-            if (differenceInDays >= 8) {
-                Log.e("MSTATS", "The date is a week or more old." + visit);
-                numberOfAttractionsThisMonth++;
-                numberOfAttractionsThisYear++;
-            }else {
-                numberOfAttractionsThisWeek++;
-                numberOfAttractionsThisMonth++;
-                numberOfAttractionsThisYear++;
-                Log.e("MSTATS", "The less than a week old." + visit);
-            }
-
-            // Check if the date is a month or more old
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(oldDate);
-            calendar.add(Calendar.MONTH, 1);
 
-            if (currentDate.after(calendar.getTime())) {
-                Log.e("MSTATS", "The date is a month or more old." + visit);
+            // Check if the date is in the current year
+            calendar.setTime(currentDate);
+            int currentYear = calendar.get(Calendar.YEAR);
+
+            calendar.setTime(dateToCheck);
+            int yearToCheck = calendar.get(Calendar.YEAR);
+
+            if (currentYear == yearToCheck) {
+                Log.e("DATESS", "The date is in the current year: " + visit + "\nCurrent year is: "+ currentYear + "\n Year to Check: "+yearToCheck);
                 numberOfAttractionsThisYear++;
+                // Check if the date is in the current month
+                calendar.setTime(currentDate);
+                int currentMonth = calendar.get(Calendar.MONTH);
+
+                calendar.setTime(dateToCheck);
+                int monthToCheck = calendar.get(Calendar.MONTH);
+
+                if (currentMonth == monthToCheck) {
+                    Log.e("DATESS", "The date is in the current month: " + visit + "\nCurrent month is: "+ currentMonth + "\n Month to Check: "+monthToCheck);
+                    numberOfAttractionsThisMonth++;
+                }else{
+                    Log.e("DATESS", "The date is NOT in the current month: " + visit + "\nCurrent month is: "+ currentMonth + "\n Month to Check: "+monthToCheck);
+                }
+
+                // Check if the date is in the current week
+                calendar.setTime(currentDate);
+                int currentWeek = calendar.get(Calendar.WEEK_OF_YEAR);
+
+                calendar.setTime(dateToCheck);
+                int weekToCheck = calendar.get(Calendar.WEEK_OF_YEAR);
+
+                if (currentWeek == weekToCheck) {
+                    Log.e("DATESS", "The date is in the current week: " + visit + "\nCurrent week is: "+ currentWeek + "\n Week to Check: "+weekToCheck);
+                    numberOfAttractionsThisWeek++;
+                }else{
+                    Log.e("DATESS", "The date is NOT in the current week: " + visit + "\nCurrent week is: "+ currentWeek + "\n Week to Check: "+weekToCheck);
+                }
+
+            }else{
+                Log.e("DATESS", "The date is NOT in the current year: " + visit + "\nCurrent year is: "+ currentYear + "\n Year to Check: "+yearToCheck);
             }
 
-           // // Check if the date is a year or more old
-           // calendar.setTime(oldDate);
-           // calendar.add(Calendar.YEAR, 1);
-//
-           // if (currentDate.after(calendar.getTime())) {
-           //     System.out.println("The date is a year or more old.");
-           // }
+
+
+
+
+
+
+
+
         }
 
-
+        statAllTime.setText(numberOfAdventuresAllTime+"");
+        statYear.setText(numberOfAttractionsThisYear+"");
+        statMonth.setText(numberOfAttractionsThisMonth+"");
+        statWeek.setText(numberOfAttractionsThisWeek+"");
         }
 
 

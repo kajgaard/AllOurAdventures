@@ -25,10 +25,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextView signUpInstead;
     Button signInBtn;
     FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        UserDataController userDataController = UserDataController.getInstance();
 
         email = findViewById(R.id.email_ET);
         password = findViewById(R.id.password_ET);

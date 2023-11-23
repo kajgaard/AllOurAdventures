@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static String user;
 
-    public UserDataController userDataController = new UserDataController();
 
     FloatingActionButton newEntryBtn;
     private final int FINE_PERMISSION_CODE = 1;
@@ -110,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
-    
+
 
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
