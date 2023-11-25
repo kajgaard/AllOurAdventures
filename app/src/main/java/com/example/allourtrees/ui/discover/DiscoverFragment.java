@@ -16,7 +16,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.allourtrees.Attraction;
 import com.example.allourtrees.R;
+import com.example.allourtrees.UserDataController;
 import com.example.allourtrees.databinding.FragmentDiscoverBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,12 +29,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DiscoverFragment extends Fragment implements OnMapReadyCallback {
 
     private FragmentDiscoverBinding binding;
 
     GoogleMap gMap;
 
+    UserDataController userDataController = UserDataController.getInstance();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +67,21 @@ public class DiscoverFragment extends Fragment implements OnMapReadyCallback {
         LatLng dtuMarker = new LatLng(55.78243354245375, 12.513651004508711);
         this.gMap.addMarker(new MarkerOptions().position(dtuMarker).title("TEST MARKER").icon(BitmapFromVector(getContext(),R.drawable.seen_pin)));
         this.gMap.moveCamera(CameraUpdateFactory.newLatLng(dtuMarker));
+        insertMarkersAsAttraction();
 
+    }
+
+    private void insertMarkersAsAttraction(){
+        ArrayList<Attraction> alreadyVisited = userDataController.getVisitedAttractionsAsObjects();
+        List<Attraction> notVisited = userDataController.getAllNotVisitedAttractionsAsObjects();
+        for(Attraction attraction : alreadyVisited){
+            LatLng pinMarker = new LatLng(attraction.getLattitude(), attraction.getLongitude());
+            this.gMap.addMarker(new MarkerOptions().position(pinMarker).title(attraction.getAttractionName()).icon(BitmapFromVector(getContext(),R.drawable.seen_pin)));
+        }
+        for(Attraction attraction : notVisited){
+            LatLng pinMarker = new LatLng(attraction.getLattitude(), attraction.getLongitude());
+            this.gMap.addMarker(new MarkerOptions().position(pinMarker).title(attraction.getAttractionName()).icon(BitmapFromVector(getContext(),R.drawable.unseen_pin)));
+        }
     }
 
     private BitmapDescriptor

@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static ArrayList<String> visitedAttractions = new ArrayList<>();
     public static ArrayList<String> visitedAttractionsDates = new ArrayList<>();
+    UserDataController userDataController = UserDataController.getInstance();
+
 
 
     @Override
@@ -172,7 +174,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public List<Attraction> attractionList = new ArrayList<>();
+
     public void getAttractionsFromCsv(){
+        this.attractionList = userDataController.getAttractionList();
+    }
+    public void getAttractionsFromCsv1(){
         InputStream is = getResources().openRawResource(R.raw.attractions_new_11);
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(is, StandardCharsets.UTF_8)
