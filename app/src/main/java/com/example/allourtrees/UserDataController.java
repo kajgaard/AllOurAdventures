@@ -34,6 +34,7 @@ public class UserDataController {
     String userName;
     String userID;
 
+
     public static ArrayList<String> visitedAttractions = new ArrayList<>();
     public static ArrayList<String> visitedAttractionsDates = new ArrayList<>();
 
@@ -70,12 +71,11 @@ public class UserDataController {
 
     public void getAlreadyVisitedAttractionsFromDB(MyFirebaseCallBack firebaseCallBack){
 
-        FirebaseFirestore fStore;
-        fStore = FirebaseFirestore.getInstance();
+
         visitedAttractions.clear();
         visitedAttractionsDates.clear();
 
-        Query query = fStore.collection("users").document(mAuth.getUid()).collection("adventures");  // without ordering
+        Query query = db.collection("users").document(mAuth.getUid()).collection("adventures");  // without ordering
 
         query
                 .get()

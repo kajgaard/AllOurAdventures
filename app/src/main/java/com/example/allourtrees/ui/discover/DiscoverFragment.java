@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -42,6 +43,8 @@ public class DiscoverFragment extends Fragment implements OnMapReadyCallback {
     private FragmentDiscoverBinding binding;
 
     GoogleMap gMap;
+    Fragment map;
+    ConstraintLayout layout;
 
     UserDataController userDataController = UserDataController.getInstance();
 
@@ -53,6 +56,8 @@ public class DiscoverFragment extends Fragment implements OnMapReadyCallback {
         binding = FragmentDiscoverBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        layout = binding.layout;
+        layout.setVisibility(View.GONE);
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -71,7 +76,12 @@ public class DiscoverFragment extends Fragment implements OnMapReadyCallback {
         this.gMap = googleMap;
         insertMarkersAsAttraction();
         centerMapOnMyLocation();
+        makeMapVisible();
 
+    }
+
+    private void makeMapVisible(){
+        layout.setVisibility(View.VISIBLE);
     }
 
     private void insertMarkersAsAttraction() {
@@ -104,18 +114,17 @@ public class DiscoverFragment extends Fragment implements OnMapReadyCallback {
         Location mLocation = MainActivity.getCurrentLocation();
         LatLng myLocation = new LatLng(mLocation.getLatitude(),
                 mLocation.getLongitude());
-        if(myLocation != null){
-            gMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
+        gMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
 
-//        // Zoom in, animating the camera.
-            gMap.animateCamera(CameraUpdateFactory.zoomTo(12), 500, null);
-            gMap.getUiSettings().setZoomControlsEnabled(false);
-            gMap.getUiSettings().setCompassEnabled(false);
-            gMap.getUiSettings().setMyLocationButtonEnabled(true);
+        // Zoom in, animating the camera.
+        gMap.animateCamera(CameraUpdateFactory.zoomTo(12), 500, null);
+        gMap.getUiSettings().setZoomControlsEnabled(false);
+        gMap.getUiSettings().setCompassEnabled(false);
+        gMap.getUiSettings().setMyLocationButtonEnabled(true);
 
         }
 
-    }
+
 
     private BitmapDescriptor
     BitmapFromVector(Context context, int vectorResId)

@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dummyLocation = new Location("");
         dummyLocation.setLatitude(55.78112381571037);
         dummyLocation.setLongitude(12.514669704755342);
+        dummyLocation.setAccuracy(5);
         currentLocation = dummyLocation;
 
         task.addOnSuccessListener(new OnSuccessListener<Location>() {

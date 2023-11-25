@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        UserDataController userDataController = UserDataController.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
         email = findViewById(R.id.email_ET);
         password = findViewById(R.id.password_ET);
@@ -42,7 +42,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         signInBtn = findViewById(R.id.signInBtn);
         signInBtn.setOnClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
+
+
+
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
