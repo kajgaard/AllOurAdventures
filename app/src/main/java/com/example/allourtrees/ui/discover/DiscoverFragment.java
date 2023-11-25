@@ -1,9 +1,12 @@
 package com.example.allourtrees.ui.discover;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +15,13 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.allourtrees.Attraction;
+import com.example.allourtrees.MainActivity;
 import com.example.allourtrees.R;
 import com.example.allourtrees.UserDataController;
 import com.example.allourtrees.databinding.FragmentDiscoverBinding;
@@ -63,25 +68,53 @@ public class DiscoverFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-            this.gMap = googleMap;
-        LatLng dtuMarker = new LatLng(55.78243354245375, 12.513651004508711);
-        this.gMap.addMarker(new MarkerOptions().position(dtuMarker).title("TEST MARKER").icon(BitmapFromVector(getContext(),R.drawable.seen_pin)));
-        this.gMap.moveCamera(CameraUpdateFactory.newLatLng(dtuMarker));
+        this.gMap = googleMap;
         insertMarkersAsAttraction();
+        centerMapOnMyLocation();
 
     }
 
-    private void insertMarkersAsAttraction(){
+    private void insertMarkersAsAttraction() {
         ArrayList<Attraction> alreadyVisited = userDataController.getVisitedAttractionsAsObjects();
         List<Attraction> notVisited = userDataController.getAllNotVisitedAttractionsAsObjects();
-        for(Attraction attraction : alreadyVisited){
+        for (Attraction attraction : alreadyVisited) {
             LatLng pinMarker = new LatLng(attraction.getLattitude(), attraction.getLongitude());
-            this.gMap.addMarker(new MarkerOptions().position(pinMarker).title(attraction.getAttractionName()).icon(BitmapFromVector(getContext(),R.drawable.seen_pin)));
+            this.gMap.addMarker(new MarkerOptions().position(pinMarker).title(attraction.getAttractionName()).icon(BitmapFromVector(getContext(), R.drawable.seen_pin)));
         }
-        for(Attraction attraction : notVisited){
+        for (Attraction attraction : notVisited) {
             LatLng pinMarker = new LatLng(attraction.getLattitude(), attraction.getLongitude());
-            this.gMap.addMarker(new MarkerOptions().position(pinMarker).title(attraction.getAttractionName()).icon(BitmapFromVector(getContext(),R.drawable.unseen_pin)));
+            this.gMap.addMarker(new MarkerOptions().position(pinMarker).title(attraction.getAttractionName()).icon(BitmapFromVector(getContext(), R.drawable.unseen_pin)));
         }
+    }
+
+    private void centerMapOnMyLocation() {
+
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        gMap.setMyLocationEnabled(true);
+
+        Location mLocation = MainActivity.getCurrentLocation();
+        LatLng myLocation = new LatLng(mLocation.getLatitude(),
+                mLocation.getLongitude());
+        if(myLocation != null){
+            gMap.moveCamera(CameraUpdateFactory.newLatLng(myLocation));
+
+//        // Zoom in, animating the camera.
+            gMap.animateCamera(CameraUpdateFactory.zoomTo(12), 500, null);
+            gMap.getUiSettings().setZoomControlsEnabled(false);
+            gMap.getUiSettings().setCompassEnabled(false);
+            gMap.getUiSettings().setMyLocationButtonEnabled(true);
+
+        }
+
     }
 
     private BitmapDescriptor

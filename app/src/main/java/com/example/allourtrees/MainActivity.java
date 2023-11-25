@@ -119,6 +119,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        Location dummyLocation;
+        dummyLocation = new Location("");
+        dummyLocation.setLatitude(55.78112381571037);
+        dummyLocation.setLongitude(12.514669704755342);
+        currentLocation = dummyLocation;
 
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
