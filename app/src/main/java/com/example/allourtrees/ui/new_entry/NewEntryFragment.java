@@ -158,7 +158,7 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener, 
                Toast.makeText(getActivity(), "Nothing was entered, returning to home", Toast.LENGTH_SHORT).show();
                ((MainActivity)getActivity()).navController.popBackStack();
                ((MainActivity)getActivity()).navController.navigate(R.id.navigation_home);
-           }
+           } //
        }
     }
 
