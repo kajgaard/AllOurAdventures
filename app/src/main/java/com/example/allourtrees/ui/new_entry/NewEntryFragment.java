@@ -106,9 +106,15 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener, 
         isFragmentActive = true;
         required = binding.attractionRequiredIv;
 
-        Calendar c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance(Locale.ENGLISH);
 
-        String currentDateString = DateFormat.getDateInstance().format(c.getTime());
+        //String currentDateString = DateFormat.getDateInstance().format(c.getTime());
+        Date chosenDate = c.getTime();
+        // Define the output pattern for the desired format
+        SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy", Locale.ENGLISH);
+
+        // Format the current date to the desired output format
+        String currentDateString = outputFormat.format(chosenDate);
 
         dateField.setText(currentDateString);
 
@@ -192,12 +198,21 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar c = Calendar.getInstance();
+        // Set the desired locale to English
+        Locale englishLocale = Locale.ENGLISH;
+        Calendar c = Calendar.getInstance(englishLocale);
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-        String currentDateString = DateFormat.getDateInstance().format(c.getTime());
+        Date chosenDate = c.getTime();
+        // Define the output pattern for the desired format
+        SimpleDateFormat outputFormat = new SimpleDateFormat("MMM dd, yyyy", englishLocale);
+
+        // Format the current date to the desired output format
+        String currentDateString = outputFormat.format(chosenDate);
+
+        //String currentDateString = DateFormat.getDateInstance().format(c.getTime());
 
         dateField.setText(currentDateString);
     }
