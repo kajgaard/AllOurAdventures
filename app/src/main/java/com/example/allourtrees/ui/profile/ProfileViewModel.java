@@ -10,7 +10,7 @@ public class ProfileViewModel extends ViewModel {
 
     public ProfileViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is profile fragment");
+        mText.setValue("The profile page hasn't been implemented yet...\nWhen you no longer wish to test anymore, feel free to just delete the app\n\nAll data will be deleted no later than January 31st 2024");
     }
 
     public LiveData<String> getText() {

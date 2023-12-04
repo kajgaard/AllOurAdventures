@@ -143,6 +143,8 @@ public class NewEntryFragment extends Fragment implements View.OnClickListener, 
             //DialogFragment datePicker = new DatePickerFragment();
             //datePicker.setTargetFragment(NewEntryFragment.this,0);
             //datePicker.show(getFragmentManager(), "date picker");
+        }else if(view == add){
+            Toast.makeText(getActivity(), "This hasn't been implemented yet, sorry!", Toast.LENGTH_SHORT).show();
         }
        if(view == saveAdventureBtn && isFragmentActive){
 

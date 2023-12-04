@@ -32,6 +32,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -68,7 +70,7 @@ public class HomeFragment extends Fragment {
     private CommunityAdapter communityAdapter;
     UserDataController userDataController = UserDataController.getInstance();
 
-    TextView statAllTime, statWeek, statMonth, statYear;
+    TextView statAllTime, statWeek, statMonth, statYear, todayDate;
 
     public HomeFragment(){
         //Required empty constructor (idfk)
@@ -87,6 +89,20 @@ public class HomeFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         userID = mAuth.getCurrentUser().getUid();
 
+        // Get the current date
+        LocalDate currentDate = LocalDate.now();
+
+        // Define the formatter with the desired pattern and locale
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d'TH' MMMM yyyy", Locale.ENGLISH);
+
+        // Format the current date using the formatter
+        String formattedDate = currentDate.format(formatter);
+
+        // Convert the formatted date to uppercase
+        formattedDate = formattedDate.toUpperCase();
+
+        todayDate = binding.currentDateTV;
+        todayDate.setText(formattedDate);
 
 
         //////////////////////////////////////////////////////////
@@ -173,7 +189,7 @@ public class HomeFragment extends Fragment {
         dummyBadgeItems.add(new BadgeItem(R.drawable.teater_badge, "Stage Maestro","Thrust yourself into the thrilling realm of theaters and visit all of the theaters", 0, 5));
         dummyBadgeItems.add(new BadgeItem(R.drawable.aquarium_badge, "Aqua Ambassador","Appreciate an awe-inspiring array of Aquariums, by visiting all the aquariums", 0, 3));
         dummyBadgeItems.add(new BadgeItem(R.drawable.museum_badge, "Museum Master","Discover a magnificent maze of museums by visiting all the museums", 0, 14));
-        dummyBadgeItems.add(new BadgeItem(R.drawable.history_badge, "Time Traveler","Heightening your historical horizon by visiting all the historical sites", 0, 5));
+        dummyBadgeItems.add(new BadgeItem(R.drawable.history_badge, "Time Traveller","Heightening your historical horizon by visiting all the historical sites", 0, 5));
         dummyBadgeItems.add(new BadgeItem(R.drawable.centre_badge, "Center Chase","Celebrate the captivating corridors by visiting all the centers", 0, 3));
         dummyBadgeItems.add(new BadgeItem(R.drawable.resort_badge, "Paradise Pursuit","Realize a rejuvenating retreat by visiting all the resorts", 0, 1));
         dummyBadgeItems.add(new BadgeItem(R.drawable.castle_badge, "Fortress Connoisseur","Conquer the colossal charm of past times by visiting all the castles", 0, 5));
@@ -268,7 +284,7 @@ public class HomeFragment extends Fragment {
                                 break;
                             case "History":
                                 for(BadgeItem badge : badgeList){
-                                    if(badge.getBadgeName().equals("Time Traveler")){
+                                    if(badge.getBadgeName().equals("Time Traveller")){
                                         badge.addProgress();
                                         Log.w("BADGESS","Category matched for: "+visit+" Badge: "+badge.getBadgeName()+ " and HISTORY");
 
@@ -321,12 +337,12 @@ public class HomeFragment extends Fragment {
     private List<CommunityActivityItem> generateCommunityActivityItems(){
         //Should be fetched from db
         List<CommunityActivityItem> dummyCommunityItems = new ArrayList<>();
-        dummyCommunityItems.add(new CommunityActivityItem(true,R.drawable.woman_profile_pic,R.drawable.church_badge,"Pilgrim Badge", "Susan J."));
-        dummyCommunityItems.add(new CommunityActivityItem(false,R.drawable.hvide_maend_smol,"De Hvide Mænd","Jeppe K."));
+        dummyCommunityItems.add(new CommunityActivityItem(true,R.drawable.woman_profile_pic,R.drawable.castle_badge,"Time Traveller", "Susan J."));
+        dummyCommunityItems.add(new CommunityActivityItem(false,R.drawable.hvide_maend_smol,"De Hvide Mænd","Tom K."));
         dummyCommunityItems.add(new CommunityActivityItem(false,R.drawable.frederiksborg_smol,"Frederiksborg Slot","Charlotte H."));
-        dummyCommunityItems.add(new CommunityActivityItem(true,R.drawable.man_profile_pic1,R.drawable.intermediate_badge,"Intermediate Explorer", "Jeppe K."));
+        dummyCommunityItems.add(new CommunityActivityItem(true,R.drawable.man_profile_pic1,R.drawable.park_badge,"Green Oasis Guru", "Tom K."));
         dummyCommunityItems.add(new CommunityActivityItem(false,R.drawable.kanal_rundfart_smol,"Nyhavn","Tina L."));
-        dummyCommunityItems.add(new CommunityActivityItem(true,R.drawable.man_profile_pic2,R.drawable.troll_badge,"The Trolls of Denmark", "Timmy P."));
+        dummyCommunityItems.add(new CommunityActivityItem(true,R.drawable.man_profile_pic2,R.drawable.zoo_badge,"Wild Warden", "Timmy P."));
 
         return dummyCommunityItems;
     }
